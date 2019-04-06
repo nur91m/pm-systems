@@ -14,20 +14,25 @@ const ProjectSchema = new Schema({
   },
   disciplines: [
     {
-      name: {
-        type: String,
-        required: true
-      },
-      reports: [
-        {
-          weeklyReport: {
-            type: Schema.Types.ObjectId,
-            ref: 'weekly-report'
-          }
-        }
-      ]
+      type: [String],
+      required: true
     }
-  ]
+  ],
+  reports: [
+    {
+      discipline: {
+        type: String        
+      },
+      weeklyReport: {
+        type: Schema.Types.ObjectId,
+        ref: 'weekly-report'
+      }
+    }
+  ],
+  status: {
+    type: String,
+    required: true    
+  }
 });
 
 module.exports = Project = mongoose.model('projects', ProjectSchema);

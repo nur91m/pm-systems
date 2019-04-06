@@ -5,6 +5,8 @@ const passport = require('passport');
 
 // Route handlers
 const users = require('./routes/api/users');
+const projects = require('./routes/api/projects');
+const reports = require('./routes/api/reports');
 
 
 const app = express();
@@ -35,6 +37,8 @@ require('./config/passport')(passport);
 
 // Use routes
 app.use('/api/users', users);
+app.use('/api/projects', projects);
+app.use('/api/reports', reports);
 
 
 

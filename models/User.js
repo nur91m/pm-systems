@@ -25,8 +25,8 @@ const UserSchema = new Schema({
         required: true
     },
     role: {
-        type: String,
-        required: true
+        type: String
+        
     },
     department: {
         type: String
