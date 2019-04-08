@@ -1,0 +1,46 @@
+.even{
+    background-color:white;
+}
+.uneven{
+    background-color:#1565c017;
+}
+
+
+
+td.cellselected.editable .dhx_combo_edit{
+    background: white;
+    outline: transparent;
+}
+
+.gridbox table {
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+
+/* /* 
+.gridbox_material.gridbox table.hdr td {
+    border: 1px solid black !important;
+    color: white!important;
+    background-color: #1565C0 !important;
+    text-align: center !important;
+}*/
+.gridbox_material.gridbox .xhdr {
+    border-bottom: 0px!important;
+} 
+
+.gridbox_material.gridbox table.obj.row20px tr td:hover{
+    
+    border: 2px solid #1a73e8!important; 
+}
+
+tr.rowselected {
+    border: 2.5px solid #1a73e8!important; 
+    background-color: #1a73e828;
+}
+
+/* .dhtmlx_validation_error {
+    background-color: rgba(255, 0, 0, 0.1)!important;
+    border: 2px solid red !important;
+    font-weight: bold;
+    } */
