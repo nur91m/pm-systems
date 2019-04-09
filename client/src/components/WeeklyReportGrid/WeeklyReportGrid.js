@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import './codebase/dhtmlxgrid.css'
 import './WeeklyReportGrid.css'
 import reportHandler from './weeklyReportHandler'
@@ -9,7 +10,7 @@ export default class WeeklyReportGrid extends React.Component {
   constructor(props) {
     super(props);
     
-		
+		axios.get()
   }
 
   componentDidMount() {
