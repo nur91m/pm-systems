@@ -1,0 +1,3 @@
+export const GET_ERRORS = 'GET_ERRORS';
+export const CREATE_WEEKLY_REPORT = 'CREATE_WEEKLY_REPORT';
+

@@ -1,16 +1,18 @@
 import React from 'react';
+import propTypes from 'prop-types'
 import axios from 'axios';
 import './codebase/dhtmlxgrid.css'
 import './WeeklyReportGrid.css'
 import reportHandler from './weeklyReportHandler'
+import { connect } from 'react-redux';
+import { createWeeklyReport } from '../../actions/reportActions';
 
 
-
-export default class WeeklyReportGrid extends React.Component {
+class WeeklyReportGrid extends React.Component {
   constructor(props) {
     super(props);
     
-		axios.get()
+		
   }
 
   componentDidMount() {
@@ -69,6 +71,8 @@ export default class WeeklyReportGrid extends React.Component {
     tasks.date = this.getDate();
     console.log(tasks);
 
+    this.props.createWeeklyReport(tasks);
+
   }
 
   // Generate current date
@@ -84,7 +88,7 @@ export default class WeeklyReportGrid extends React.Component {
   
   
   render() {
-    return <div>
+    return <div>     
       <button onClick={this.addRowAbove.bind(this)}>Добавить сверху</button>
       <button onClick={this.addRowBelow.bind(this)}>Добавить снизу</button>
       <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
@@ -94,3 +98,10 @@ export default class WeeklyReportGrid extends React.Component {
     </div>
   }
 }
+
+const mapStateToProps = (state) => ({
+  weeklyReport: state.weeklyReport
+});
+
+
+export default connect(mapStateToProps, {createWeeklyReport})(WeeklyReportGrid);
