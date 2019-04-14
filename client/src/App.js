@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import WeeklyReportGrid from './components/WeeklyReportGrid/WeeklyReportGrid';
 import './App.css';
-import {combineReducers, createStore, applyMiddleware} from 'redux';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import store from './store';
-
-
-
+import Projects from './components/Projects/Projects';
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
-      <Router>
-        <div className="App">
-        <Route path="/weekly/" component={WeeklyReportGrid} />
-        </div>
-      </Router>
+        <Router>
+          <div className="App">
+            <div className="container">
+              <Route exact path="/projects" component={Projects}/>
+              <Route exact path="/weekly/:projectNumber" component={WeeklyReportGrid} />
+            </div>
+          </div>
+        </Router>
       </Provider>
     );
   }

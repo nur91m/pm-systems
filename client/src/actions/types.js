@@ -1,3 +1,6 @@
 export const GET_ERRORS = 'GET_ERRORS';
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const CREATE_WEEKLY_REPORT = 'CREATE_WEEKLY_REPORT';
+export const  GET_PROJECTS ='GET_PROJECTS';
+
 

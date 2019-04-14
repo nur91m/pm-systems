@@ -11,8 +11,15 @@ import { createWeeklyReport } from '../../actions/reportActions';
 class WeeklyReportGrid extends React.Component {
   constructor(props) {
     super(props);
+    this.projectId = this.props.location.projectId;
+    console.log(this.projectId);
+    
     
 		
+  }
+  componentWillReceiveProps() {
+    this.projectId = this.props.location.projectId;
+    console.log(this.projectId);
   }
 
   componentDidMount() {
@@ -88,7 +95,8 @@ class WeeklyReportGrid extends React.Component {
   
   
   render() {
-    return <div>     
+    return <div>   
+      <p>{this.projectId}</p>  
       <button onClick={this.addRowAbove.bind(this)}>Добавить сверху</button>
       <button onClick={this.addRowBelow.bind(this)}>Добавить снизу</button>
       <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>

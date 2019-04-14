@@ -29,3 +29,8 @@ export const createWeeklyReport = reportData => dispatch => {
         })
     });
 }
+
+// Get last weekly report
+export const getLastReport = reportData => dispatch => {
+    axios.get('/api/reports/')
+}

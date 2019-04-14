@@ -34,7 +34,7 @@ router.post('/register', (req, res) => {
         email: req.body.email,
         password: req.body.password,
         position: req.body.position,
-        department: req.body.department,
+        discipline: req.body.discipline,
         avatar
       });
       newUser

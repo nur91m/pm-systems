@@ -97,13 +97,31 @@ router.get('/order-number/:orderNumber', (req, res) => {
     );
 });
 
+
+// @route   GET api/projects/all
+// @desc    Get all active projects
+// @access  Public
+router.get('/all', (req, res) => {
+  
+  Project.find()    
+    .then(projects => {      
+      if (!projects) {
+        errors.noprofile = 'There are no active projects';
+        return res.status(404).json(errors);
+      }
+
+      res.json(projects);
+    })
+    .catch(err => res.status(404).json({ projects: 'There are no active projects' }));
+});
+
 //  @route  GET /api/projects/:projectId
 //  @desc   Get project by project Id
 //  @access Public
 router.get('/:projectId', (req, res) => {
     const errors = {};
   
-    Project.findOne({ projectId: req.params.projectId })
+    Project.findOne({ _id: req.params.projectId })
       .then(project => {
         if (!project) {
           errors.noproject = 'There are no projects';
@@ -117,3 +135,5 @@ router.get('/:projectId', (req, res) => {
   });
 
 module.exports = router;
+
+

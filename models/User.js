@@ -28,7 +28,7 @@ const UserSchema = new Schema({
         type: String
         
     },
-    department: {
+    discipline: {
         type: String
     },
     avatar: {

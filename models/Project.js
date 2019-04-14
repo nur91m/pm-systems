@@ -30,8 +30,8 @@ const ProjectSchema = new Schema({
     }
   ],
   status: {
-    type: String,
-    required: true    
+    type: String
+    
   }
 });
 
