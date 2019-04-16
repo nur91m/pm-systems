@@ -55,12 +55,11 @@ router.post('/login', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email: req.body.email }).then(user => { 
     // Check for user
     if (!user) {
       return res.status(404).json({ email: 'User not found' });
     }
-
     // Check password
     if (user.password == req.body.password) {
 
@@ -70,12 +69,12 @@ router.post('/login', (req, res) => {
             lastName: user.lastName,
             email: user.email,        
             avatar: user.avatar,
-            role: user.role
+            role: user.role,
+            discipline: user.discipline
           };
-
         // Sign token        
         jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, (error, token) => {
-            res.json({success: true, token: 'Bearer '+token});
+            res.status(200).json({success: true, token: 'Bearer '+token});
         })
     } else {
       return res.status(400).json({ password: 'Password incorrect' });
@@ -88,11 +87,13 @@ router.post('/login', (req, res) => {
 //  @access Private
 
 router.get('/current', passport.authenticate('jwt', {session: false}), (req,res)=>{
-    res.json({
+    res.status(200).json({
         name: req.user.name,
         email: req.user.email,
         avatar: req.user.avatar,
-        id: req.user.id   
+        id: req.user.id,
+        discipline: req.user.discipline,
+        role: req.user.role
     })
 } )
 

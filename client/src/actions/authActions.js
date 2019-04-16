@@ -1,6 +1,8 @@
 import {CREATE_WEEKLY_REPORT, GET_ERRORS, SET_CURRENT_USER} from './types';
+
 import setAuthToken from '../utils/setAuthToken';
 import jwtDecode from 'jwt-decode'
+import axios from 'axios';
 
 //Register User 
 
@@ -20,13 +22,13 @@ export const registerUser = (userData) => dispatch =>  {
 // Login - Get User Token
 export const loginUser = userData => dispatch => {
     axios.post('/api/users/login', userData)
-    .then(res => {
+    .then(res => {    
         // Save to localstorage
-        const {token} = res.data;        
+        const {token} = res.data;
         localStorage.setItem('jwtToken', token);
         // Set token to Auth header
         setAuthToken(token);
-        // Decode token
+        // Decode token        
         const decoded = jwtDecode(token);
         dispatch(setCurrentUser(decoded));
     })
@@ -37,6 +39,7 @@ export const loginUser = userData => dispatch => {
         })
     })
 }
+
 
 export const setCurrentUser = decoded => {
     return {

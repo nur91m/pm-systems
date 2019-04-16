@@ -18,6 +18,9 @@ const WeeklyReportSchema = new Schema({
   },
   tasks: [
     {
+      order: {
+        type: Number
+      },
       activityID: {
         type: String
       },

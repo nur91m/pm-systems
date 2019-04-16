@@ -72,7 +72,7 @@ router.post(
         if (!data) {
           return res.status(400).json({ project: 'Could not find project' });
         }
-        res.json(data);
+        res.status(200).json(data);
       }
     );
   }
@@ -90,7 +90,7 @@ router.get('/order-number/:orderNumber', (req, res) => {
         errors.noproject = 'There are no projects';
         return res.status(404).json(errors);
       }
-      res.json(project);
+      res.status(200).json(project);
     })
     .catch(error =>
       res.status(404).json({ project: 'There is no project with this number' })
@@ -127,7 +127,7 @@ router.get('/:projectId', (req, res) => {
           errors.noproject = 'There are no projects';
           return res.status(404).json(errors);
         }
-        res.json(project);
+        res.status(200).json(project);
       })
       .catch(error =>
         res.status(404).json({ project: 'There is no project with this number' })

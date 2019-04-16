@@ -5,11 +5,12 @@ import { getProjects } from "../../actions/projectActions";
 
 export class Projects extends Component {
   componentDidMount() {
-    this.props.getProjects();
-    console.log(this.props.project);
+    this.props.getProjects();    
   }
 
   componentWillReceiveProps(nextProps) {
+
+    // Create project items based on data from DB
     this.projectList = nextProps.project.map(project => (
       <li key={project.name}>
         <Link

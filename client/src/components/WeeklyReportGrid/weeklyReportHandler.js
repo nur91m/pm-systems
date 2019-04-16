@@ -57,9 +57,9 @@ const initWeeklyReport = colAccess => {
         comments: cols[10],
         docCount: cols[11],
         totalHours: cols[12],
-        drawn1: cols[13],
-        drawn2: cols[14],
-        drawn3: cols[15]
+        drawn1: null,
+        drawn2: null,
+        drawn3: null
       };
       tasks.push(task);
     });

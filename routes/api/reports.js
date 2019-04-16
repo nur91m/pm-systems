@@ -9,27 +9,28 @@ const CustomReport = require('../../models/CustomReport');
 const Project = require('../../models/Project');
 const User = require('../../models/User');
 
-//  @route  GET /api/reports/weekly-report
+//  @route  POST /api/reports/weekly-report/last
 //  @desc   GET last weekly report. Request should contain userId and projectId
 //  @access Private
-router.get(
-  '/weekly-report',
+router.post(
+  '/weekly-report/last',
   passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    // Find which discipline is user from
-    User.findById(req.body.user)
-      .then(user => {
-        const discipline = user.discipline;        
+  (req, res) => {    
+        const discipline = req.body.discipline;
         // Get latest weekly report by projectId
         WeeklyReport.find({ project: req.body.projectId, discipline})
            .sort({ date: -1 })
            .limit(1)
-          .then(report => {            
-            return res.json(report);
+          .then(report => {
+            if(report.length!=0){
+              return res.status(200).json(report[0]);
+            } else {
+              return res.status(200).json(report);
+            }
+            
           })
           .catch(err => console.log(err));
-      })
-      .catch(err => console.log(err));
+      
   }
 );
 
@@ -56,8 +57,9 @@ router.post(
 
     new WeeklyReport(reportFileds)
       .save()
-      .then(report => res.json(report))
-      .catch(error => res.json(error));
+      .then(report => {        
+        return res.status(200).json(report);})
+      .catch(error => res.status(400).json(error));
   }
 );
 
@@ -88,7 +90,7 @@ router.post(
       { new: true },
       (err, data) => {
         if (err) {
-          return res.json({ msg: 'Coud not update report', error: err });
+          return res.status(400).json({ msg: 'Coud not update report', error: err });
         }
         res.json(data);
       }
@@ -120,8 +122,8 @@ router.post(
 
     new CustomReport(reportFileds)
       .save()
-      .then(report => res.json(report))
-      .catch(error => res.json(error));
+      .then(report => res.status(200).json(report))
+      .catch(error => res.status(400).json(error));
   }
 );
 
@@ -152,9 +154,9 @@ router.post(
       { new: true },
       (err, data) => {
         if (err) {
-          return res.json({ msg: 'Coud not update report', error: err });
+          return res.status(400).json({ msg: 'Coud not update report', error: err });
         }
-        res.json(data);
+        res.status(200).json(data);
       }
     );
   }
