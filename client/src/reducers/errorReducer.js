@@ -1,5 +1,4 @@
 import {GET_ERRORS} from '../actions/types';
-import { log } from 'util';
 const initialState = {}
 
 export default function(state=initialState,action) {

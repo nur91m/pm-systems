@@ -1,7 +1,11 @@
-const initWeeklyReport = colAccess => {
+  export const initWeeklyReport = canEdit => {    
+    
     // Grid configurations
-    colAccess = 'ro,ro,ro,ro,ro,ro,ro,ro,edn,ro,ro,ro,ro,ro,ro,ro';
-    const colWidth = '40,100,440,80,65,90,90,90,80,100,90,50,65,190,190,190';
+    let colAccess = 'ro,ro,ro,ro,ro,ro,ro,ro,edn,ro,ro,ro,ro,ro,ro,ro';
+    if(canEdit){
+      colAccess = 'edn,ed,ed,ed,edn,edn,edn,edn,edn,ed,ed,edn,edn,ed,ed,ed';
+    }
+    const colWidth = '40,80,440,80,65,90,90,90,80,100,90,50,65,190,190,190';
     const headerTitles =
       '#,Activity ID, Deliverable Description, Drawing Number, Budget hours, Actual Hours, Earned Hours, Remaining Hours, Progress, Дата внесение изменении, Comments, № of docs,Total hours,Исполнитель / Drawn,Исполнитель / Drawn,Исполнитель / Drawn';
   
@@ -33,7 +37,7 @@ const initWeeklyReport = colAccess => {
     return a >= 0 && a <= 100;
   };
   
-  const getJsonData = grid => {
+  export const getJsonData = grid => {
     grid.setCSVDelimiter('\t');
     const tasks = [];
   
@@ -65,9 +69,39 @@ const initWeeklyReport = colAccess => {
     });
     return { tasks };
   };
+
+  export const convertToJson = tasks => {
+    const data = tasks.map(task => {
+      const row = {
+        id: task._id,
+        data: [
+          String(task.order),
+          String(task.activityID),
+          String(task.description),
+          String(task.drawingNumber),
+          String(task.budgetHours),
+          String(task.actualHours),
+          String(task.earnedHours),
+          String(task.remainingHours),
+          String(task.progress),
+          new Date(task.changedDate),
+          String(task.comments),
+          String(task.docCount),
+          String(task.totalHours),
+          String(task.drawn1),
+          String(task.drawn2),
+          String(task.drawn3)
+        ]
+      };
+      return row;
+    });
+    console.log(data)
+    return { rows: data};
+  }
   
-  module.exports = {
-    initWeeklyReport,
-    getJsonData
-  };
+  // module.exports = {
+  //   getJsonData,
+  //   initWeeklyReport
+    
+  // };
   

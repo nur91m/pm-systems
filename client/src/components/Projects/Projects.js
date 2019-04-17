@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../actions/projectActions";
+import WeeklyReportGrid from "../WeeklyReportGrid/WeeklyReportGrid";
 
 export class Projects extends Component {
   componentDidMount() {
@@ -13,12 +14,7 @@ export class Projects extends Component {
     // Create project items based on data from DB
     this.projectList = nextProps.project.map(project => (
       <li key={project.name}>
-        <Link
-          to={{
-            pathname: `/weekly/${project.orderNumber}`,
-            projectId: project._id
-          }}
-        >
+        <Link to={`/weekly/${project.orderNumber}`}>
           {project.name}
         </Link>
       </li>
@@ -28,7 +24,7 @@ export class Projects extends Component {
   render() {
     return (
       <div>
-        <ul>{this.projectList}</ul>
+        <ul>{this.projectList}</ul>  
       </div>
     );
   }

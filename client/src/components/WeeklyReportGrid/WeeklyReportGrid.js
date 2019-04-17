@@ -1,7 +1,7 @@
 import React from "react";
 import "./codebase/dhtmlxgrid.css";
 import "./WeeklyReportGrid.css";
-import reportHandler from "./weeklyReportHandler";
+import * as gridHandler from "./weeklyReportHandler";
 import { connect } from "react-redux";
 import { createWeeklyReport, getLastReport } from "../../actions/reportActions";
 import Role from "../Auth/Roles";
@@ -9,62 +9,38 @@ import Role from "../Auth/Roles";
 class WeeklyReportGrid extends React.Component {
   constructor() {
     super();
-    this.state = {
-      canEdit: false,
-      projectId: this.props.location.projectId
-    };
+    this.canEdit = false;
   }
 
   componentDidMount() {
-    const projectId = this.props.location.projectId;
-
-    // Initialize data grid
-    this.grid = reportHandler.initWeeklyReport();
+    const projectNumber = this.props.match.params.projectNumber;
 
     // Get user role and set canEdit property
-    // Employee can only edit progress column. Can'r add, remove rows.
-    const role = this.props.user.role;
+    // Employee can only edit progress column. Can't add, remove rows.
+    const role = this.props.user.role;    
     if (role !== Role.Employee) {
-      this.setState({ canEdit: true });
+      this.canEdit = true;      
     }
 
     // Get last WeeklyReport from DB
-    const req = { projectId, discipline: this.props.user.discipline };
+    const req = { projectNumber, discipline: this.props.user.discipline };
     this.props.getLastReport(req);
 
+    // Initialize data grid
+    this.grid = gridHandler.initWeeklyReport(this.canEdit);
   }
 
   componentWillReceiveProps(props) {
-    const tasks = props.weeklyReport.tasks;
-    const dat = tasks.map(task => {
-      const row = {
-        id: task._id,
-        data: [
-          String(task.order),
-          String(task.activityID),
-          String(task.description),
-          String(task.drawingNumber),
-          String(task.budgetHours),
-          String(task.actualHours),
-          String(task.earnedHours),
-          String(task.remainingHours),
-          String(task.progress),
-          String(task.changedDate),
-          String(task.comments),
-          String(task.docCount),
-          String(task.totalHours),
-          String(task.drawn1),
-          String(task.drawn2),
-          String(task.drawn3)
-        ]
-      };
-      return row;
-    });
-    
-    const jsonData = { rows: dat };
-    console.log(jsonData);
-    this.grid.parse(jsonData, "json");
+    if (props.weeklyReport.isExist) {
+      if (props.weeklyReport.tasks !== undefined) {
+        // Convert array of tasks to json data to render in the grid        
+        const jsonData = gridHandler.convertToJson(props.weeklyReport.tasks);
+        this.grid.parse(jsonData, "json");
+      }
+    }
   }
+
+  
 
   addRowAbove = () => {
     const id = this.grid.getRowIndex(this.grid.getSelectedRowId());
@@ -80,13 +56,14 @@ class WeeklyReportGrid extends React.Component {
     const id = this.grid.getSelectedRowId();
     this.grid.deleteRow(id);
   };
-  submit = () => {
-    const tasks = reportHandler.getJsonData(this.grid);
 
+  // Send filled report to DB
+  submit = () => {
+    const tasks = gridHandler.getJsonData(this.grid);
     tasks.date = this.getDate();
 
     const report = {
-      project: this.props.location.projectId,
+      project: this.props.match.params.projectNumber,
       user: this.props.user.id,
       discipline: this.props.user.discipline,
       date: tasks.date,
@@ -103,21 +80,26 @@ class WeeklyReportGrid extends React.Component {
     const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
     const yyyy = today.getFullYear();
 
-    today = mm + "/" + dd + "/" + yyyy;
+    const hh = today.getHours();
+    const min = today.getSeconds();
+
+    
+    
+    today = mm + "/" + dd + "/" + yyyy + " " + hh + ":" + min;
     return today;
   }
 
   render() {
+    const visibility = this.props.weeklyReport.isExist ? "" : "none"
+
     return (
-      <div>
-        <p>{this.projectId}</p>
-        <p>You are {this.props.user.name}</p>
-        <button onClick={this.addRowAbove.bind(this)}>Добавить сверху</button>
-        <button onClick={this.addRowBelow.bind(this)}>Добавить снизу</button>
-        <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
-        <button onClick={this.submit.bind(this)}>Отправить</button>
-        <div id={"gridbox"} style={{ width: "auto", overflow: "auto" }} />
-      </div>
+      <div style={{display: visibility}}>        
+      <button onClick={this.addRowAbove.bind(this)}>Добавить сверху</button>
+      <button onClick={this.addRowBelow.bind(this)}>Добавить снизу</button>
+      <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
+      <button onClick={this.submit.bind(this)}>Отправить</button>
+      <div id={"gridbox"} style={{ width: "auto", overflow: "auto" }} />
+    </div>
     );
   }
 }

@@ -18,7 +18,7 @@ router.post(
   (req, res) => {    
         const discipline = req.body.discipline;
         // Get latest weekly report by projectId
-        WeeklyReport.find({ project: req.body.projectId, discipline})
+        WeeklyReport.find({ project: req.body.projectNumber, discipline})
            .sort({ date: -1 })
            .limit(1)
           .then(report => {
@@ -46,7 +46,6 @@ router.post(
     reportFileds.user = req.body.user;
     reportFileds.discipline = req.body.discipline;
     reportFileds.date = new Date(req.body.date);
-
     User.findById(req.body.user).then(user => {
       if (user.role != Roles.Employee) {
         reportFileds.needsVerification = false;

@@ -57,6 +57,7 @@ export const getLastReport = reportData => dispatch => {
       });
     })
     .catch(err => {
+      console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data

@@ -5,9 +5,8 @@ const Schema = mongoose.Schema;
 
 const WeeklyReportSchema = new Schema({
   project: {
-    type: Schema.Types.ObjectId,
-    ref: 'projects'
-  },
+    type: String    
+  }, // project OrderNumber 
   user: {
     type: Schema.Types.ObjectId,
     ref: 'users'

@@ -1,3 +1,4 @@
+import isEmpty from '../validation/is-empty'
 import {
   CREATE_WEEKLY_REPORT,
   GET_WEEKLY_REPORT,
@@ -5,6 +6,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
+  isExist: false,
   tasks: [],
   id: ""
 };
@@ -14,16 +16,15 @@ export default function(state = initialState, action) {
     case CREATE_WEEKLY_REPORT:
       return {
         id: action.payload._id,
-        tasks: action.payload.tasks
+        tasks: action.payload.tasks,
+        isExist: !isEmpty(action.payload.tasks)
       };
     case GET_WEEKLY_REPORT:
       return {
         id: action.payload._id,
-        tasks: action.payload.tasks
+        tasks: action.payload.tasks,
+        isExist: !isEmpty(action.payload.tasks)
       };
-    case GET_ERRORS:
-      return action.payload;
-
     default:
       return state;
   }
