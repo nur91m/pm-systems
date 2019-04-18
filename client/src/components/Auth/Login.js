@@ -11,6 +11,13 @@ constructor(){
         error: []
     }
 }
+
+componentWillReceiveProps(props){
+    if(props.auth.isAuthenticated) {
+        window.location.href = '/projects';
+    }
+}
+
     login = () => {
         const userData = {
             email: this.state.email,

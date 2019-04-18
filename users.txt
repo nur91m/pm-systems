@@ -1,0 +1,70 @@
+ Нурсултан	Акылбаев 	Nursultan.Akylbayev@kazgor.kz	Nursultan.Akylbayev	kazgor2019	Ведущий специалист по ТСП	PmManager	УП	Nursultan.Akylbayev.jpg
+ Кайсар	Айгараев 	Kaisar.Aigarayev@kazgor.kz	Kaisar.Aigarayev	kazgor2019	Архитектор III категории	Employee	АР	Kaisar.Aigarayev.jpg
+ Канат	Айгараев 	Kanat.Aigarayev@kazgor.kz	Kanat.Aigarayev	kazgor2019	Главный специалист архитектор	Chief	АР	Kanat.Aigarayev.jpg
+ Руслан	Атагелдиев 	Ruslan.Atageldiyev@kazgor.kz	Ruslan.Atageldiyev	kazgor2019	Главный специалист конструктор	Chief	КЖиКМ	Ruslan.Atageldiyev.jpg
+ Асель	Байдыханова 	Assel.Baidykhanova@kazgor.kz	Assel.Baidykhanova	kazgor2019	Главный специалист эколог, Менеджер проектов	Chief	ОВОС	Assel.Baidykhanova.jpg
+ Асия	Бактыгереева 	assiya.baktygereyeva@kazgor.kz	assiya.baktygereyeva	kazgor2019	Заведующий сектором ОВ	Chief	ОВ	assiya.baktygereyeva.jpg
+ Гульнара	Бапахова 	Gulnara.Bapakhova@kazgor.kz	Gulnara.Bapakhova	kazgor2019	Ведущий инженер-эколог	Employee	ОВОС	Gulnara.Bapakhova.jpg
+ Нурбол	Бармаков 	Nurbol.Barmakov@kazgor.kz	Nurbol.Barmakov	kazgor2019	Главный специалист ЭЛ	Chief	ЭЛ	Nurbol.Barmakov.jpg
+ Александр	Бельский 	Alexandr.Belskiy@kazgor.kz	Alexandr.Belskiy	kazgor2019	Ведущий инженер СС	Employee	СС	Alexandr.Belskiy.jpg
+ Шолпан	Биржанова 	sholpan.birzhanova@kazgor.kz	sholpan.birzhanova	kazgor2019	Главный специалист по сметам	Employee	СМ	sholpan.birzhanova.jpg
+ Ирина	Брикун 	Irina.Brikun@kazgor.kz	Irina.Brikun	kazgor2019	ГАП 	Chief	АР	Irina.Brikun.jpg
+ Надежда	Грыленко 	Nadezhda.Grylenko@kazgor.kz	Nadezhda.Grylenko	kazgor2019	Главный специалист КИПиА	Chief	КИПиА	Nadezhda.Grylenko.jpg
+ Досымбек	Джорашов 	Dossymbek.Jorashov@kazgor.kz	Dossymbek.Jorashov	kazgor2019	Ведущий специалист по ТСП	PmManager	УП	Dossymbek.Jorashov.jpg
+ Абзал	Досеке 	Abzal.Dosseke@kazgor.kz	Abzal.Dosseke	kazgor2019	Ведущий инженер ОВ	Employee	ОВ	Abzal.Dosseke.jpg
+ Тимур	Достанов 	Timur.Dostanov@kazgor.kz	Timur.Dostanov	kazgor2019	Ведущий инженер ВК	Employee	ВК	Timur.Dostanov.jpg
+ Айнур	Ералиева 	Ainur.Yeraliyeva@kazgor.kz	Ainur.Yeraliyeva	kazgor2019	Заведующий сектором конструкторов	Employee	КЖиКМ	Ainur.Yeraliyeva.jpg
+ Айгерим	Естаева 	Aigerim.Yestayeva@kazgor.kz	Aigerim.Yestayeva	kazgor2019	Заведующий сектором архитекторов	Employee	АР	Aigerim.Yestayeva.jpg
+ Нурсултан	Есиркегенов 	N.Yessirkegenov@kazgor.kz	N.Yessirkegenov	kazgor2019	BIM координатор	PmManager	СС	N.Yessirkegenov.jpg
+ Олжас	Есыркенов 	Olzhas.Yessyrkenov@kazgor.kz	Olzhas.Yessyrkenov	kazgor2019	Ведущий архитектор	Employee	АР	Olzhas.Yessyrkenov.jpg
+ Алмат	Жаманкулов 	Almat.Zhamankulov@kazgor.kz	Almat.Zhamankulov	kazgor2019	Ведущий специалист по развитию BIM 	PmManager	УП	Almat.Zhamankulov.jpg
+ Мейрхат	Жахан 	Meirkhat.Zhakhan@kazgor.kz	Meirkhat.Zhakhan	kazgor2019	Архитектор II категории	Employee	АР	Meirkhat.Zhakhan.jpg
+ Айдар	Жетписов 	aidar.zhetpissov@kazgor.kz	aidar.zhetpissov	kazgor2019	Ведущий архитектор	Employee	АР	aidar.zhetpissov.jpg
+ Сабит	Ерназаров 	Sabit.Yernazarov@kazgor.kz	Sabit.Yernazarov	kazgor2019	Инженер-конструктор I категории	Employee	КЖиКМ	Sabit.Yernazarov.jpg
+ Елена	Иванова 	Yelena.Ivanova@kazgor.kz	Yelena.Ivanova	kazgor2019	Главный специалист ОВ	Chief	ОВ	Yelena.Ivanova.jpg
+ Наталья	Ивкина 	Natalya.Ivkina@kazgor.kz	Natalya.Ivkina	kazgor2019	ГАП	Chief	АР	Natalya.Ivkina.jpg
+ Рустем	Ильясов 	Rustem.Ilyassov@kazgor.kz	Rustem.Ilyassov	kazgor2019	Заведующий сектором конструкторов	Employee	КЖиКМ	Rustem.Ilyassov.jpg
+ Мария	Кинус 	Tatyana.Karelina@kazgor.kz	Tatyana.Karelina	kazgor2019	Главный специалист архитектор	Chief	АР	Tatyana.Karelina.jpg
+ Динара	Кожакова 	Dinara.Kozhakova@kazgor.kz	Dinara.Kozhakova	kazgor2019	Заведующий сектором архитекторов	Employee	АР	Dinara.Kozhakova.jpg
+ Бахыткалий	Коржумбаев 	B.Korzhumbayev@kazgor.kz	B.Korzhumbayev	kazgor2019	Главный специалист архитектор	Chief	АР	B.Korzhumbayev.jpg
+ Наталья	Корнеева 	natalya.korneyeva@kazgor.kz	natalya.korneyeva	kazgor2019	Заведующий сектором ОВ	Employee	ОВ	natalya.korneyeva.jpg
+ Екатерина	Коротинская 	Y.Korotinskaya@kazgor.kz	Y.Korotinskaya	kazgor2019	Инженер-конструктор	Employee	КЖиКМ	Y.Korotinskaya.jpg
+ Перизат	Кузембекова 	Perizat.Kuzembekova@kazgor.kz	Perizat.Kuzembekova	kazgor2019	Главный специалист ОВ	Chief	ОВ	Perizat.Kuzembekova.jpg
+ София	Куленова 	Sofiya.Kulenova@kazgor.kz	Sofiya.Kulenova	kazgor2019	Главный специалист конструктор	Chief	КЖиКМ	Sofiya.Kulenova.jpg
+ Назерке	Курманканова 	Nazerke.Kurmankanova@kazgor.kz	Nazerke.Kurmankanova	kazgor2019	Инженер-конструктор III категории	Employee	КЖиКМ	Nazerke.Kurmankanova.jpg
+ Амирхан	Лазгиев 	Amirkhan.Lazgiyev@kazgor.kz	Amirkhan.Lazgiyev	kazgor2019	ГАП	Chief	АР	Amirkhan.Lazgiyev.jpg
+ Екатерина	Ли 	Ekaterina.Li@kazgor.kz	Ekaterina.Li	kazgor2019	Архитектор II категории	Employee	АР	Ekaterina.Li.jpg
+ Акылбек	Мереке 	Akylbek.Mereke@kazgor.kz	Akylbek.Mereke	kazgor2019	ГИП	Chief	КЖиКМ	Akylbek.Mereke.jpg
+ Инжу	Молдахметова 	Inzhu.Moldakhmetova@kazgor.kz	Inzhu.Moldakhmetova	kazgor2019	Инженер-сметчик III категории	Employee	СМ	Inzhu.Moldakhmetova.jpg
+ Сая	Молжанова 	Saya.Molzhanova@kazgor.kz	Saya.Molzhanova	kazgor2019	Архитектор I категории	Employee	АР	Saya.Molzhanova.jpg
+ Диля	Мусакулова 	Dilya.Mussakulova@kazgor.kz	Dilya.Mussakulova	kazgor2019	ГАП	Chief	АР	Dilya.Mussakulova.jpg
+ Досбол	Мусин 	Dosbol.Mussin@kazgor.kz	Dosbol.Mussin	kazgor2019	Архитектор I категории	Employee	АР	Dosbol.Mussin.jpg
+ Жандос	Мухамбетов 	Zhandos.Mukhambetov@kazgor.kz	Zhandos.Mukhambetov	kazgor2019	Заведующий сектором по ЭЛ.	Employee	ЭЛ	Zhandos.Mukhambetov.jpg
+ Хазирет	Мырзатаев 	khaziret.myrzatayev@kazgor.kz	khaziret.myrzatayev	kazgor2019	Архитектор практикант	Employee	АР	khaziret.myrzatayev.jpg
+ Валерий	Прокопов 	Valeriy.Prokopov@kazgor.kz	Valeriy.Prokopov	kazgor2019	Ведущий инженер ЭЛ	Employee	ЭЛ	Valeriy.Prokopov.jpg
+ Алия	Сабыралиева 	Aliya.Sabyraliyeva@kazgor.kz	Aliya.Sabyraliyeva	kazgor2019	Главный специалист технолог	Chief	ТХ	Aliya.Sabyraliyeva.jpg
+ Ренат	Садыганов 	Renat.Sadyganov@kazgor.kz	Renat.Sadyganov	kazgor2019	Ведущий инженер ЭЛ	Employee	ЭЛ	Renat.Sadyganov.jpg
+ Жанна	Сарсенова 	Janna.Sarsenova@kazgor.kz	Janna.Sarsenova	kazgor2019	ГАП	Chief	АР	Janna.Sarsenova.jpg
+ Наталья	Сон 	Natalya.Son@kazgor.kz	Natalya.Son	kazgor2019	Главный специалист СС	Chief	СС	Natalya.Son.jpg
+ Юрий	Сон 	Yuriy.Son@kazgor.kz	Yuriy.Son	kazgor2019	Главный специалист конструктор	Chief	КЖиКМ	Yuriy.Son.jpg
+ Богдан	Стефанович 	Bogdan.Stefanovich@kazgor.kz	Bogdan.Stefanovich	kazgor2019	Инженер-конструктор III категории	Employee	КЖиКМ	Bogdan.Stefanovich.jpg
+ Тимур	Тагыбеков 	Timur.Tagybekov@kazgor.kz	Timur.Tagybekov	kazgor2019	Заведующий сектором ЭЛ	Employee	ЭЛ	Timur.Tagybekov.jpg
+ Алихан	Татыгулов 	Alikhan.Tatygulov@kazgor.kz	Alikhan.Tatygulov	kazgor2019	Инженер-конструктор I категории	Employee	КЖиКМ	Alikhan.Tatygulov.jpg
+ Канат	Тебеев 	Kanat.Tebeyev@kazgor.kz	Kanat.Tebeyev	kazgor2019	Главный менеджер по УП	PmManager	УП	Kanat.Tebeyev.jpg
+ Сандугаш	Умбетова 	Sandugash.Umbetova@kazgor.kz	Sandugash.Umbetova	kazgor2019	Ведущий инженер ВК	Employee	ВК	Sandugash.Umbetova.jpg
+ Зауре	Уразгалиева 	zaure.urazgalieva@kazgor.kz	zaure.urazgalieva	kazgor2019		Employee		zaure.urazgalieva.jpg
+ Хайша	Уразгалиева 	Khaisha.Urazgaliyeva@kazgor.kz	Khaisha.Urazgaliyeva	kazgor2019	Главный инженер по сметам ЦентрПроект	Chief	СМ	Khaisha.Urazgaliyeva.jpg
+ Сапарбай	Утарбаев 	Saparbay.Utarbayev@kazgor.kz	Saparbay.Utarbayev	kazgor2019	Главный специалист архитектор	Chief	АР	Saparbay.Utarbayev.jpg
+ Данияр	Фазылов 	Daniyar.Fazylov@kazgor.kz	Daniyar.Fazylov	kazgor2019	Конструктор	Employee	КЖиКМ	Daniyar.Fazylov.jpg
+ Рустем	Фазылов 	Rustem.Fazylov@kazgor.kz	Rustem.Fazylov	kazgor2019	BIM менеджер	Chief	КЖиКМ	Rustem.Fazylov.jpg
+ Антон	Федянин 	Anton.Fedyanin@kazgor.kz	Anton.Fedyanin	kazgor2019	Главный специалист архитектор	Employee	АР	Anton.Fedyanin.jpg
+ Антонида	Хан 	Antonida.Khan@kazgor.kz	Antonida.Khan	kazgor2019	Менеджер проектов, главный специалист ВК	Employee	ВК	Antonida.Khan.jpg
+ Галина	Хан 	Galina.Khan@kazgor.kz	Galina.Khan	kazgor2019	Главный специалист по ТСП	Chief	ТСП	Galina.Khan.jpg
+ Мария	Хохлова 	Mariya.Khokhlova@kazgor.kz	Mariya.Khokhlova	kazgor2019	Заведующий сектором архитекторов	Employee	АР	Mariya.Khokhlova.jpg
+ Алексей	Цыпкин 	Alexey.Tsypkin@kazgor.kz	Alexey.Tsypkin	kazgor2019	Инженер-конструктор III категории	Employee	КЖиКМ	Alexey.Tsypkin.jpg
+ Темирхон	Шадыбеков 	Temirkhan.Shadibekov@kazgor.kz	Temirkhan.Shadibekov	kazgor2019	Архитектор	Employee	АР	Temirkhan.Shadibekov.jpg
+ Каиржамал	Шаяхметова 	K.Shayakhmetova@kazgor.kz	K.Shayakhmetova	kazgor2019	Менеджер проектов, главный специалист ОВ	Chief	ОВ	K.Shayakhmetova.jpg
+ Станислав	Шепель 	Stanislav.Shepel@kazgor.kz	Stanislav.Shepel	kazgor2019	ГАП	Employee	АР	Stanislav.Shepel.jpg
+ Сагынбек	Шолахаев 	Sagynbek.Sholakhayev@kazgor.kz	Sagynbek.Sholakhayev	kazgor2019	Заведующий сектором ВК	Employee	ВК	Sagynbek.Sholakhayev.jpg
+ Баглан	Шотаев 	Baglan.Shotayev@kazgor.kz	Baglan.Shotayev	kazgor2019	Заведующий сектором архитекторов	Employee	АР	Baglan.Shotayev.jpg
+admin	admin	admin@kazgor.kz	Admin.Adminov	admin		PmManager	АР	Admin.Adminov.jpg

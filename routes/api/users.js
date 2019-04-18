@@ -5,7 +5,6 @@ const keys = require('../../config/keys');
 const registerInputValidator = require('../../validation/register');
 const loginInputValidator = require('../../validation/login');
 const passport = require('passport');
-
 const router = express.Router();
 
 // Load User Model
@@ -106,6 +105,37 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req,res)
 // router.post('/update', (req,res)=>{
 
 // })
+
+const fs = require('fs');
+const readline =  require('readline');
+
+
+
+
+router.get('/import', (req,res) => {
+  let rl = readline.createInterface({
+    input: fs.createReadStream('users2.txt')
+});
+  console.log('started')
+// event is emitted after each line
+rl.on('line', function(line) {
+  let x = line.split('\t');
+   
+   const user = {
+      name: x[0],
+      lastName: x[1],
+      email: x[2],
+      password: x[4],
+      position: x[5],
+      role: x[6],
+      discipline: x[7],
+      avatar: x[8]
+  }
+  const newUser = new User(user);
+  newUser.save();
+});
+res.json('Created');
+})
 
 
 
