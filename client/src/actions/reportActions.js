@@ -1,4 +1,4 @@
-import { CREATE_WEEKLY_REPORT, GET_WEEKLY_REPORT, GET_ERRORS } from "./types";
+import { CREATE_WEEKLY_REPORT, GET_WEEKLY_REPORT, GET_ERRORS, WEEKLY_REPORT_LOADING } from "./types";
 import axios from "axios";
 
 //Create report
@@ -47,7 +47,8 @@ export const editWeeklyReport = reportData => dispatch => {
 };
 
 // Get last weekly report
-export const getLastReport = reportData => dispatch => {        
+export const getLastReport = reportData => dispatch => { 
+  dispatch(setProjectLoading())       
   axios
     .post('/api/reports/weekly-report/last', reportData)
     .then(res => {        
@@ -64,3 +65,10 @@ export const getLastReport = reportData => dispatch => {
       });
     });
 };
+
+export const setProjectLoading = () => (
+  {
+    type: WEEKLY_REPORT_LOADING    
+  }
+)
+  

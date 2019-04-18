@@ -5,42 +5,31 @@ import * as gridHandler from "./weeklyReportHandler";
 import { connect } from "react-redux";
 import { createWeeklyReport, getLastReport } from "../../actions/reportActions";
 import Role from "../Auth/Roles";
+import isEmpty from "../../validation/is-empty";
+import Spinner from '../common/Spinner';
 
 class WeeklyReportGrid extends React.Component {
-  constructor() {
-    super();
-    this.canEdit = false;
-  }
-
-  componentDidMount() {
+  
+  componentWillMount(){
     const projectNumber = this.props.match.params.projectNumber;
-
-    // Get user role and set canEdit property
-    // Employee can only edit progress column. Can't add, remove rows.
-    const role = this.props.user.role;    
-    if (role !== Role.Employee) {
-      this.canEdit = true;      
-    }
 
     // Get last WeeklyReport from DB
     const req = { projectNumber, discipline: this.props.user.discipline };
     this.props.getLastReport(req);
-
-    // Initialize data grid
-    this.grid = gridHandler.initWeeklyReport(this.canEdit);
   }
+  
+  componentDidUpdate() {  
+    if (this.props.weeklyReport.isExist) {
+      // Initialize data grid
+      this.grid = gridHandler.initWeeklyReport(this.props.user.canEdit);
 
-  componentWillReceiveProps(props) {
-    if (props.weeklyReport.isExist) {
-      if (props.weeklyReport.tasks !== undefined) {
-        // Convert array of tasks to json data to render in the grid        
-        const jsonData = gridHandler.convertToJson(props.weeklyReport.tasks);
+      if (!isEmpty(this.props.weeklyReport.tasks)) {
+        // Convert array of tasks to json data to render in the grid
+        const jsonData = gridHandler.convertToJson(this.props.weeklyReport.tasks);
         this.grid.parse(jsonData, "json");
       }
     }
   }
-
-  
 
   addRowAbove = () => {
     const id = this.grid.getRowIndex(this.grid.getSelectedRowId());
@@ -83,23 +72,42 @@ class WeeklyReportGrid extends React.Component {
     const hh = today.getHours();
     const min = today.getSeconds();
 
-    
-    
     today = mm + "/" + dd + "/" + yyyy + " " + hh + ":" + min;
     return today;
   }
 
   render() {
-    const visibility = this.props.weeklyReport.isExist ? "" : "none"
+    const { weeklyReport } = this.props;
+    const { user } = this.props;
+    console.log(user);
+
+    let gridContent;
+
+    if (weeklyReport.loading) {
+      gridContent = <Spinner />;
+    } else 
+    if (weeklyReport.isExist) {
+      gridContent = (
+        <div>
+          {user.canEdit && (
+            <div className="gridEditBtns">
+              <button onClick={this.addRowAbove.bind(this)}>Добавить сверху</button>
+              <button onClick={this.addRowBelow.bind(this)}>Добавить снизу</button>
+              <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
+            </div>
+          )}
+          <button onClick={this.submit.bind(this)}>Отправить</button>
+          <div id={"gridbox"} style={{ width: "auto", overflow: "auto" }} />
+        </div>
+      );
+    } else {
+      gridContent = <p>There's no report</p>
+    }
 
     return (
-      <div style={{display: visibility}}>        
-      <button onClick={this.addRowAbove.bind(this)}>Добавить сверху</button>
-      <button onClick={this.addRowBelow.bind(this)}>Добавить снизу</button>
-      <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
-      <button onClick={this.submit.bind(this)}>Отправить</button>
-      <div id={"gridbox"} style={{ width: "auto", overflow: "auto" }} />
-    </div>
+      <div>
+      {gridContent}
+      </div>
     );
   }
 }
