@@ -35,7 +35,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <div className="container">
+            <div className="app-context">
               <Route exact path="/login" component={Login} />
               <Switch>
                 <PrivateRoute exact path="/projects" component={Projects} />

@@ -44,3 +44,21 @@ tr.rowselected {
     border: 2px solid red !important;
     font-weight: bold;
     } */
+
+textarea {
+      background: rgba(255, 255, 255, 0.932) !important;
+      resize: none;
+      display: inline-block;
+
+      
+    }
+
+.row-group {
+    background: #1a73e8b4;
+    
+    font-weight: 700;
+}
+
+div.gridbox_material.gridbox table.obj tr.row-group td{
+    color: white!important;
+}

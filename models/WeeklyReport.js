@@ -57,16 +57,13 @@ const WeeklyReportSchema = new Schema({
         type: Number
       },
       drawn1: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
+        type: String
       },
       drawn2: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
+        type: String
       },
       drawn3: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
+        type: String
       }
     }
   ],

@@ -1,18 +1,13 @@
  import isEmpty from '../../validation/is-empty'
 
- export const initWeeklyReport = canEdit => {    
+ export const initCustomReport = canEdit => {    
     
     // Grid configurations
-    let colAccess = 'ro,ro,ro,ro,ro,ro,ro,ro,edn,ro,ro,ro,ro,ro,ro,ro';
-    if(canEdit){
-      colAccess = 'edn,ed,ed,ed,edn,edn,edn,edn,edn,ed,ed,edn,edn,ed,ed,ed';
-    }
-    const colWidth = '40,80,440,80,65,90,90,90,80,100,90,50,65,190,190,190';
+    let colAccess = 'edn,ed,ed,ed,ed,ed,ed,ed';
+    
+    const colWidth = '28,134,66,347,63,59,62,140';
     const headerTitles =
-      '#,Activity ID, Deliverable Description, Drawing Number, Budget hours, Actual Hours, Earned Hours, Remaining Hours, Progress, Дата внесение изменении, Comments, № of docs,Total hours,Исполнитель / Drawn,Исполнитель / Drawn,Исполнитель / Drawn';
-  
-    const colValidators = new Array(16);
-    colValidators[8] = 'Percentage';
+      '#,Номер заказа, Процент участия в проекте, Вид проделанной работы (разработка; корректировка; оформление; перевод; адаптация; проверка; расчет; предоставление комментариев (писем); изучение и сбор исходных материалов), Кол-во листов, Формат листа, Процент завер-я, Примечания';
   
     // Create Grid object
     const grid = new window.dhtmlXGridObject('gridbox');
@@ -23,9 +18,9 @@
     grid.setColTypes(colAccess);
   
     // Setting Validators
-    grid.setNumberFormat('0', 8, '', '');
-    grid.enableValidation(true);
-    grid.setColValidators(colValidators);
+    // grid.setNumberFormat('0', 8, '', '');
+    // grid.enableValidation(true);
+    // grid.setColValidators(colValidators);
   
     //grid.setColSorting('int');
     
@@ -62,10 +57,6 @@
     return grid;
   };
   
-  window.dhtmlxValidation.isPercentage = function(a) {
-    return a >= 0 && a <= 100;
-  };
-
   export const parse = (grid,jsonData)=>{
     const gridData = grid;    
     gridData.parse(jsonData, "json");     

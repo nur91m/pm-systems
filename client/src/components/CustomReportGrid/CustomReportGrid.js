@@ -1,38 +1,41 @@
 import React from "react";
 import "../../utils/codebase/dhtmlxgrid.css";
-import "./WeeklyReportGrid.css";
-import * as gridHandler from "./weeklyReportHandler";
+import "./CustomReportGrid.css";
+import * as gridHandler from "./customReportHandler";
 import { connect } from "react-redux";
 import { createWeeklyReport, getLastReport } from "../../actions/reportActions";
 import isEmpty from "../../validation/is-empty";
 import Spinner from '../common/Spinner';
 
-class WeeklyReportGrid extends React.Component {
+class CustomReportGrid extends React.Component {
   constructor() {
     super();
     this.gridRef = React.createRef();
   }
   
   componentWillMount(){
-    const projectNumber = this.props.match.params.projectNumber;
+    // const projectNumber = this.props.match.params.projectNumber;
 
-    // Get last WeeklyReport from DB
-    const req = { projectNumber, discipline: this.props.user.discipline };
-    this.props.getLastReport(req);
+    // // Get last WeeklyReport from DB
+    // const req = { projectNumber, discipline: this.props.user.discipline };
+    // this.props.getLastReport(req);
   }
 
 
+  componentDidMount(){
+    this.grid = gridHandler.initCustomReport(this.props.user.canEdit);
+  }
 
   componentDidUpdate() {
     
-    if(!isEmpty(this.gridRef.current) && isEmpty(this.grid)) {      
-      this.grid = gridHandler.initWeeklyReport(this.props.user.canEdit);
-      this.updateGridData();      
-    }
+         
+    
+    
+    
   }
 
   componentWillReceiveProps(props) {  
-    this.updateGridData(props);    
+    // this.updateGridData(props);    
   }
 
 
@@ -57,7 +60,6 @@ class WeeklyReportGrid extends React.Component {
 
   addRowAbove = () => {
     const id = this.grid.getRowIndex(this.grid.getSelectedRowId());
-
     this.grid.addRow(this.grid.uid(), [], id);
   };
   addRowBelow = () => {
@@ -67,14 +69,6 @@ class WeeklyReportGrid extends React.Component {
     return rowUid;
   };
 
-  addGroupRow = () => {
-    const uid = this.addRowBelow();
-    console.log(uid);
-    
-    const index = this.grid.getRowIndex(uid);    
-    this.grid.callEvent("onGridReconstructed", []);
-    
-  }
   deleteRow = () => {
     const id = this.grid.getSelectedRowId();
     this.grid.deleteRow(id);
@@ -122,8 +116,7 @@ class WeeklyReportGrid extends React.Component {
     } else 
     if (weeklyReport.isExist || user.canEdit) {
       gridContent = (
-        <div>
-          {user.canEdit && (
+        <div>          
             <div className="gridEditBtns">
               <button onClick={this.moveUp.bind(this)}>Вверх</button>
               <button onClick={this.moveDown.bind(this)}>Вниз</button>
@@ -132,10 +125,8 @@ class WeeklyReportGrid extends React.Component {
               {/* <button onClick={this.addRowAbove.bind(this)}>Добавить сверху</button> */}
               {/* <button onClick={this.addRowBelow.bind(this)}>Добавить снизу</button> */}
               <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
-            </div>
-          )}
-          <button onClick={this.submit.bind(this)}>Отправить</button>
-          {console.log('Grid Mount')}
+            </div>          
+          <button onClick={this.submit.bind(this)}>Отправить</button>          
           <div id={"gridbox"} ref={this.gridRef} style={{ width: "auto", overflow: "auto" }} />
         </div>
       );
@@ -159,4 +150,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { createWeeklyReport, getLastReport }
-)(WeeklyReportGrid);
+)(CustomReportGrid);

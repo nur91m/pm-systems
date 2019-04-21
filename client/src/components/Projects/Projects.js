@@ -3,6 +3,7 @@ import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProjects } from "../../actions/projectActions";
 import WeeklyReportGrid from "../WeeklyReportGrid/WeeklyReportGrid";
+import CustomReportGrid from "../CustomReportGrid/CustomReportGrid";
 
 export class Projects extends Component {
   componentDidMount() {
@@ -24,7 +25,8 @@ export class Projects extends Component {
   render() {
     return (
       <div>
-        <ul>{this.projectList}</ul>  
+        <ul>{this.projectList}</ul> 
+        <CustomReportGrid /> 
       </div>
     );
   }
