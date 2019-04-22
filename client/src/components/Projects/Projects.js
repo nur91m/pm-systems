@@ -25,8 +25,7 @@ export class Projects extends Component {
   render() {
     return (
       <div>
-        <ul>{this.projectList}</ul> 
-        <CustomReportGrid /> 
+        <ul>{this.projectList}</ul>         
       </div>
     );
   }

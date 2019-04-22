@@ -120,14 +120,13 @@ class CustomReportGrid extends React.Component {
             <div className="gridEditBtns">
               <button onClick={this.moveUp.bind(this)}>Вверх</button>
               <button onClick={this.moveDown.bind(this)}>Вниз</button>
-              <button onClick={this.addRowBelow.bind(this)}>Добавить чертеж</button>
-              <button onClick={this.addGroupRow.bind(this)}>Добавить группу</button>
+              <button onClick={this.addRowBelow.bind(this)}>Добавить чертеж</button>              
               {/* <button onClick={this.addRowAbove.bind(this)}>Добавить сверху</button> */}
               {/* <button onClick={this.addRowBelow.bind(this)}>Добавить снизу</button> */}
               <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
             </div>          
           <button onClick={this.submit.bind(this)}>Отправить</button>          
-          <div id={"gridbox"} ref={this.gridRef} style={{ width: "auto", overflow: "auto" }} />
+          <div id={"gridbox"} ref={this.gridRef} style={{ width: "auto", overflow: "none" }} />
         </div>
       );
     } else {

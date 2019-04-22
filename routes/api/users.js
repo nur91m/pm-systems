@@ -54,7 +54,7 @@ router.post('/login', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then(user => { 
+  User.findOne({$or: [{email: req.body.email}, {email: req.body.email+'@kazgor.kz'}] }).then(user => { 
     // Check for user
     if (!user) {
       return res.status(404).json({ email: 'User not found' });
