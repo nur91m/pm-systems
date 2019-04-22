@@ -3,7 +3,7 @@
  export const initCustomReport = canEdit => {    
     
     // Grid configurations
-    let colAccess = 'edn,ed,ed,ed,ed,ed,ed,ed';
+    let colAccess = 'edn,coro,ed,ed,ed,ed,ed,ed';
     
     const colWidth = '28,134,66,347,63,59,62,140';
     const headerTitles =

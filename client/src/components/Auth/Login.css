@@ -1,0 +1,64 @@
+.Login{
+    width: 40vw;
+    height: 25vw;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-top: 30vh;
+    position: relative;
+    border: 1px solid #ccc;
+}
+.Login__left{
+    width: 50%;
+    flex: 0 0 50%;
+    background: #11539D;
+    padding: 2vw;
+}
+.Login__left h3{
+    color: #fff;
+}
+.Login__txt{
+    color: #fff;
+    line-height: 1.0;
+}
+.Login__right{
+    width: 50%;
+    flex:  0 0 50%;
+    padding: 2vw;
+}
+.Login__right .Login__inputs{
+    margin: 0 auto;
+    padding: 2.5vw 0;
+}
+.Login__input{
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #333;
+    margin-top: 1vw;
+}
+.Login__input:before{
+    content: './img/Person.svg';
+    position: relative;
+    display: inline-block;
+}
+.Login__btns{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2vw; 
+}
+.Login__btns a{
+    padding: .375rem .75rem;
+    color: #333;
+    text-decoration: none;
+}
+.Login__btn{
+    background: #11539D;
+    color: #fff;
+}
+input:focus{
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    outline: none;
+}

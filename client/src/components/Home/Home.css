@@ -1,0 +1,29 @@
+.report__title
+{
+    width: 100%;
+    padding: 2vw;
+    margin: 2vw auto;
+    text-align: center;
+}
+.report-box
+{
+    position: relative;
+    text-align: center;
+    height: 10vw;
+
+}
+a.report__btn
+{
+    position: relative;
+    width: 70%;
+    height: 12vw;
+    padding: 3vw;
+    background: #11539D;
+    color: #fff !important;
+    border-radius: 10px;
+    margin: 0 auto;
+    font-size: 22px;
+}
+.confirm-report-box{
+    margin: 0 auto;
+}

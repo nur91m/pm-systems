@@ -58,6 +58,10 @@ class CustomReportGrid extends React.Component {
     this.grid.moveRow(this.grid.getSelectedId(),"down")
   }
 
+  setRowSpan = () => {
+    
+  }
+
   addRowAbove = () => {
     const id = this.grid.getRowIndex(this.grid.getSelectedRowId());
     this.grid.addRow(this.grid.uid(), [], id);
@@ -125,7 +129,7 @@ class CustomReportGrid extends React.Component {
               {/* <button onClick={this.addRowBelow.bind(this)}>Добавить снизу</button> */}
               <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
             </div>          
-          <button onClick={this.submit.bind(this)}>Отправить</button>          
+          <button onClick={this.setRowSpan.bind(this)}>Отправить</button>          
           <div id={"gridbox"} ref={this.gridRef} style={{ width: "auto", overflow: "none" }} />
         </div>
       );

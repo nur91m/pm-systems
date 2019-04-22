@@ -1,0 +1,33 @@
+.header{
+    background: #11539D;
+}
+
+.breadcrumb{
+    background: none;
+    margin: 0;
+}
+.breadcrumb-item a{
+    color: #fff;
+}
+.breadcrumb-item.active{
+    color: #fff;
+}
+.breadcrumb-item.active:before{
+    color: #fff;
+}
+
+.header__user{
+    padding-right: 2vw;
+    width: 20%;
+    position: relative;
+    float: right !important;
+    right: 0 !important;
+    text-align: right;
+}
+.header__user a{
+    color: #fff !important;
+}
+.header__user a img{
+    width: 10%;
+    margin-left: 1%;
+}

@@ -1,15 +1,19 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import WeeklyReportGrid from "./components/WeeklyReportGrid/WeeklyReportGrid";
 import "./App.css";
 import { Provider } from "react-redux";
-import store from "./store";
-import Projects from "./components/Projects/Projects";
-import Login from "./components/Auth/Login";
 import setAuthToken from "./utils/setAuthToken";
+import store from "./store";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import jwt_decode from "jwt-decode";
+
+import Header from "./components/layouts/Header/Header";
+import Projects from "./components/Projects/Projects"
+import Login from "./components/Auth/Login";
 import PrivateRoute from "./components/common/PrivateRoute";
+import CustomReportGrid from "./components/CustomReportGrid/CustomReportGrid";
+import WeeklyReportGrid from "./components/WeeklyReportGrid/WeeklyReportGrid";
+import Home from "./components/Home/Home";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -35,13 +39,24 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <div className="app-context">
+            <div className="app-context">              
+              <Switch>
+                <PrivateRoute path="/" component={Header}/>
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/" component={Home}/>
+              </Switch>
+
+
               <Route exact path="/login" component={Login} />
               <Switch>
                 <PrivateRoute exact path="/projects" component={Projects} />
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/weekly/:projectNumber" component={WeeklyReportGrid}/>
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/custom" component={CustomReportGrid}/>
               </Switch>
             </div>
           </div>
