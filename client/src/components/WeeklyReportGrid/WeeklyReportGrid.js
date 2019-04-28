@@ -3,7 +3,7 @@ import "../../utils/codebase/dhtmlxgrid.css";
 import "./WeeklyReportGrid.css";
 import * as gridHandler from "./weeklyReportHandler";
 import { connect } from "react-redux";
-import { createWeeklyReport, getLastReport } from "../../actions/reportActions";
+import { createWeeklyReport, getLastWeeklyReport } from "../../actions/reportActions";
 import isEmpty from "../../validation/is-empty";
 import Spinner from "../common/Spinner";
 
@@ -18,7 +18,7 @@ class WeeklyReportGrid extends React.Component {
 
     // Get last WeeklyReport from DB
     const req = { projectNumber, discipline: this.props.user.discipline };
-    this.props.getLastReport(req);
+    this.props.getLastWeeklyReport(req);
   }
 
   componentDidUpdate() {
@@ -175,5 +175,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createWeeklyReport, getLastReport }
+  { createWeeklyReport, getLastWeeklyReport }
 )(WeeklyReportGrid);

@@ -1,46 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Schema
 
 const CustomReportSchema = new Schema({
-  project: {
-    type: Schema.Types.ObjectId,
-    ref: 'projects'
-  },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: "users"
   },
   discipline: {
-    type: String,
-    required: true
+    type: String
   },
-  tasks: [
-    {
-      participationPersentage: {
-        type: Number,
-        min: 0,
-        max: 100,
-        required: true
-      },
-      description: {
-        type: String
-      },
-      sheetCount: {
-        type: Number
-      },
-      sheetSize: {
-        type: String
-      },
-      progress: {
-        type: Number
-      },
-      comments: {
-        type: String
-      }
-    }
-  ],
   date: {
     type: Date
   },
@@ -51,10 +21,41 @@ const CustomReportSchema = new Schema({
   verified: {
     type: Boolean,
     default: false
-  }
+  },
+  projects: [
+    {
+      participationPersentage: {
+        type: Number,
+        min: 0,
+        max: 100
+      },
+      project: {
+        type: String
+      },
+      tasks: [
+        {
+          description: {
+            type: String
+          },
+          sheetCount: {
+            type: Number
+          },
+          sheetSize: {
+            type: String
+          },
+          progress: {
+            type: Number
+          },
+          comments: {
+            type: String
+          }
+        }
+      ]
+    }
+  ]
 });
 
 module.exports = CustomReport = mongoose.model(
-  'custom-report',
+  "custom-report",
   CustomReportSchema
 );

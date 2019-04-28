@@ -1,37 +1,24 @@
 import isEmpty from '../validation/is-empty'
-import {
-  CREATE_WEEKLY_REPORT,
-  GET_WEEKLY_REPORT,
-  GET_ERRORS,
-  WEEKLY_REPORT_LOADING
+import {  
+  GET_ERRORS,  
+  GET_CUSTOM_REPORT
 } from "../actions/types";
 
 const initialState = {
   isExist: false,
-  tasks: [],
+  projects: [],
   id: "",
   loading: false
 };
 
 export default function(state = initialState, action) {
-  switch (action.type) {
-    case WEEKLY_REPORT_LOADING:
-      return {
-        ...state,
-        loading: true
-      }
-    case CREATE_WEEKLY_REPORT:
+  switch (action.type) {        
+    case GET_CUSTOM_REPORT:
+      console.log(action.payload)
       return {
         id: action.payload._id,
-        tasks: action.payload.tasks,
-        isExist: !isEmpty(action.payload.tasks),
-        loading: false
-      };
-    case GET_WEEKLY_REPORT:
-      return {
-        id: action.payload._id,
-        tasks: action.payload.tasks,
-        isExist: !isEmpty(action.payload.tasks),
+        projects: action.payload.projects,
+        isExist: !isEmpty(action.payload.projects),
         loading: false
       };
     default:

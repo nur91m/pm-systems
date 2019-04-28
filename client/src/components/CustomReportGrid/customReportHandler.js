@@ -1,19 +1,19 @@
  import isEmpty from '../../validation/is-empty'
 
- export const initCustomReport = canEdit => {    
+ export const initCustomReport = (gridId, isHeaderVisible, onCellClicked) => {    
     
     // Grid configurations
-    let colAccess = 'edn,coro,ed,ed,ed,ed,ed,ed';
+    let colAccess = 'ed,ed,ed,ed,ed,ed,ed';    
+    let colWidth = '136,66,346,63,59,62,140';
+    let headerTitles ='Номер заказа,Процент участия в проекте,Вид проделанной работы (разработка; корректировка; оформление; перевод; адаптация; проверка; расчет; предоставление комментариев (писем); изучение и сбор исходных материалов), Кол-во листов, Формат листа, Процент завер-я, Примечания';  
     
-    const colWidth = '28,134,66,347,63,59,62,140';
-    const headerTitles =
-      '#,Номер заказа, Процент участия в проекте, Вид проделанной работы (разработка; корректировка; оформление; перевод; адаптация; проверка; расчет; предоставление комментариев (писем); изучение и сбор исходных материалов), Кол-во листов, Формат листа, Процент завер-я, Примечания';
-  
+
     // Create Grid object
-    const grid = new window.dhtmlXGridObject('gridbox');
+    const grid = new window.dhtmlXGridObject(gridId);
     grid.setImagePath('/codebase/imgs/');
   
     grid.setHeader(headerTitles);
+    grid.setNoHeader(!isHeaderVisible);
     grid.setInitWidths(colWidth);
     grid.setColTypes(colAccess);
   
@@ -29,28 +29,14 @@
     grid.enableMultiline(true);
     grid.init();
 
+    // Hide first and second columns in project rows
+    if(!isHeaderVisible) {
+      grid.setColumnHidden(0,true);
+      grid.setColumnHidden(1,true);      
+    }
     
     grid.enableAlterCss('even', 'uneven');
-
-    
-
-    
-    // Setup sorting logic 
-  //   let cellChangedEvent = grid.attachEvent("onCellChanged", onCellChanged); 
-
-  //   grid.attachEvent("onAfterSorting", function(){
-  //      cellChangedEvent = grid.attachEvent("onCellChanged", onCellChanged);
-  //   });
-
-  //   grid.attachEvent("onBeforeSorting", function(x,y,z){      
-  //     grid.detachEvent(cellChangedEvent);
-  //   });
-    
-  //   function onCellChanged(rId,cInd,nValue) {      
-  //     if(cInd===0) {
-  //       grid.sortRows(0,"int","asc");
-  //     }
-  // }
+    grid.attachEvent("onRowSelect", () => onCellClicked(grid));
 
     // Edit on single click
     grid.enableEditEvents(true,false,true);
@@ -73,27 +59,15 @@
     lines.forEach(line => {
       const cols = line.split('\t');      
       const task = {
-        order: isEmpty(cols[0]) ? '' : cols[0],
-        activityID: isEmpty(cols[1]) ? '' : cols[1],
         description: isEmpty(cols[2]) ? '' : cols[2],
-        drawingNumber: isEmpty(cols[3]) ? '' : cols[3],
-        budgetHours: isEmpty(cols[4]) ? '' : cols[4],
-        actualHours: isEmpty(cols[5]) ? '' : cols[5],
-        earnedHours: isEmpty(cols[6]) ? '' : cols[6],
-        remainingHours: isEmpty(cols[7]) ? '' : cols[7],
-        progress: isEmpty(cols[8]) ? '' : cols[8],
-        changedDate: isEmpty(cols[9]) ? '' : cols[9],
-        comments: isEmpty(cols[10]) ? '' : cols[10],
-        docCount: isEmpty(cols[11]) ? '' : cols[11],
-        totalHours: isEmpty(cols[12]) ? '' : cols[12],
-        drawn1: isEmpty(cols[13]) ? '' : cols[13],
-        drawn2: isEmpty(cols[14]) ? '' : cols[14],
-        drawn3: isEmpty(cols[15]) ? '' : cols[15],
-      };
-      
+        sheetCount: isEmpty(cols[3]) ? '' : cols[3],
+        sheetSize: isEmpty(cols[4]) ? '' : cols[4],
+        progress: isEmpty(cols[5]) ? '' : cols[5],
+        comments: isEmpty(cols[6]) ? '' : cols[6]       
+      };      
       tasks.push(task);
     });
-    return { tasks };
+    return tasks;
   };
 
   export const convertToJson = tasks => {

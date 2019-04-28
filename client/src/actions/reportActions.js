@@ -1,13 +1,41 @@
-import { CREATE_WEEKLY_REPORT, GET_WEEKLY_REPORT, GET_ERRORS, WEEKLY_REPORT_LOADING } from "./types";
+import {
+  CREATE_WEEKLY_REPORT,
+  CREATE_CUSTOM_REPORT,
+  GET_WEEKLY_REPORT,
+  GET_CUSTOM_REPORT,
+  GET_ERRORS,
+  WEEKLY_REPORT_LOADING
+} from "./types";
 import axios from "axios";
 
 //Create report
 
-export const createCustomReport = reportData => {
-  return {
-    type: CREATE_WEEKLY_REPORT,
-    payload: reportData
-  };
+export const createCustomReport = reportData => dispatch => {
+  axios.post("/api/reports/custom-report", reportData).then(res => {
+    dispatch({
+      type: CREATE_CUSTOM_REPORT,
+      payload: res.data
+    });
+  });
+};
+
+// Get last custom report
+export const getLastCustomReport = () => dispatch => {  
+  axios
+    .post("/api/reports/custom-report/last")
+    .then(res => {
+      dispatch({
+        type: GET_CUSTOM_REPORT,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };
 
 // Add weekly report
@@ -47,11 +75,11 @@ export const editWeeklyReport = reportData => dispatch => {
 };
 
 // Get last weekly report
-export const getLastReport = reportData => dispatch => { 
-  dispatch(setProjectLoading())       
+export const getLastWeeklyReport = reportData => dispatch => {
+  dispatch(setProjectLoading());
   axios
-    .post('/api/reports/weekly-report/last', reportData)
-    .then(res => {        
+    .post("/api/reports/weekly-report/last", reportData)
+    .then(res => {
       dispatch({
         type: GET_WEEKLY_REPORT,
         payload: res.data
@@ -66,9 +94,6 @@ export const getLastReport = reportData => dispatch => {
     });
 };
 
-export const setProjectLoading = () => (
-  {
-    type: WEEKLY_REPORT_LOADING    
-  }
-)
-  
+export const setProjectLoading = () => ({
+  type: WEEKLY_REPORT_LOADING
+});

@@ -3,95 +3,151 @@ import "../../utils/codebase/dhtmlxgrid.css";
 import "./CustomReportGrid.css";
 import * as gridHandler from "./customReportHandler";
 import { connect } from "react-redux";
-import { createWeeklyReport, getLastReport } from "../../actions/reportActions";
+import { createCustomReport, getLastCustomReport } from "../../actions/reportActions";
+import { getProjects } from "../../actions/projectActions";
 import isEmpty from "../../validation/is-empty";
-import Spinner from '../common/Spinner';
+import Spinner from "../common/Spinner";
+
+const uuidv1 = require("uuid/v1");
 
 class CustomReportGrid extends React.Component {
   constructor() {
     super();
-    this.gridRef = React.createRef();
-  }
-  
-  componentWillMount(){
-    // const projectNumber = this.props.match.params.projectNumber;
 
-    // // Get last WeeklyReport from DB
-    // const req = { projectNumber, discipline: this.props.user.discipline };
-    // this.props.getLastReport(req);
+    this.projectIds = [];
+    this.projectRows = [];
+    this.projectsValue = {};
+    this.isProjectRowAdded = false;
   }
 
+  componentDidMount() {
 
-  componentDidMount(){
-    this.grid = gridHandler.initCustomReport(this.props.user.canEdit);
+    this.props.getProjects();
+    this.props.getLastCustomReport();
+
+    
+    gridHandler.initCustomReport("gridbox", true);
   }
 
   componentDidUpdate() {
-    
-         
-    
-    
-    
+    // Add DOM element for new project row
+    if (this.isProjectRowAdded) {
+      const id = this.projectIds[this.projectIds.length - 1];
+      const grid = gridHandler.initCustomReport(id, false, this.onCellClicked);
+      this.projectRows.push(grid);
+
+      const rowUid = grid.uid();
+      grid.addRow(rowUid, [], 0);
+      this.isProjectRowAdded = false;
+    }
   }
 
-  componentWillReceiveProps(props) {  
-    // this.updateGridData(props);    
+  componentWillReceiveProps(props) {
+
+    const projects = props.projects;
+
+    if (!this.projectsList && !isEmpty(projects)) {
+      this.projectsList = projects.map(project => (
+        <option value={project.orderNumber}>
+          {project.orderNumber + " " + project.name}
+        </option>
+      ));
+      const firstItem = <option value="" selected disabled hidden>Выберите проект</option>;
+      this.projectsList.unshift(firstItem);
+    }
   }
 
-
-  updateGridData = (props = this.props)=> {    
-    if (props.weeklyReport.isExist) {  
-      if (!isEmpty(this.grid) && isEmpty(this.gridDataUpdated) && !isEmpty(props.weeklyReport.tasks)) {
-        this.gridDataUpdated = true;
-        // Convert array of tasks to json data to render in the grid
-        const jsonData = gridHandler.convertToJson(props.weeklyReport.tasks);
-        gridHandler.parse(this.grid, jsonData);          
-      }
-    }    
-  }
-
-
-  moveUp =() => {
-    this.grid.moveRow(this.grid.getSelectedId(),"up")
-  }
-  moveDown =() => {
-    this.grid.moveRow(this.grid.getSelectedId(),"down")
-  }
-
-  setRowSpan = () => {
-    
-  }
-
-  addRowAbove = () => {
-    const id = this.grid.getRowIndex(this.grid.getSelectedRowId());
-    this.grid.addRow(this.grid.uid(), [], id);
+  moveUp = () => {
+    this.grid.moveRow(this.grid.getSelectedId(), "up");
   };
-  addRowBelow = () => {
+  moveDown = () => {
+    this.grid.moveRow(this.grid.getSelectedId(), "down");
+  };
+
+  addRow = () => {
+    if (isEmpty(this.grid)) {
+      this.grid = this.projectRows[this.projectRows.length - 1];
+    }
     const id = this.grid.getRowIndex(this.grid.getSelectedRowId()) + 1;
     const rowUid = this.grid.uid();
     this.grid.addRow(rowUid, [], id);
-    return rowUid;
+  };
+
+  addProjectRow = () => {
+    this.isProjectRowAdded = true;
+    const id = uuidv1();
+    this.projectIds.push(id);
+    this.forceUpdate();
   };
 
   deleteRow = () => {
     const id = this.grid.getSelectedRowId();
     this.grid.deleteRow(id);
+
+    if (this.grid.getRowsNum() < 1) {
+      this.projectRows = this.projectRows.filter((item, index, arr) => {
+        if (item !== this.grid) {
+          return true;
+        } else {
+          this.projectIds.splice(index, 1);
+          this.grid.destructor();
+          return false;
+        }
+      }, this);
+      this.forceUpdate();
+    }
+  };
+
+  onCellClicked = (grid, id, index) => {
+    this.grid = grid;
+    this.projectRows.forEach(item => {
+      if (item !== grid) {
+        item.clearSelection();
+      }
+    });
+  };
+
+  validatePercentage = event => {
+    if (event.target.value > 100) {
+      event.target.value = 100;
+    }
+    // Save percentage for this project
+    this.projectsValue[event.target.name] = {
+      ...this.projectsValue[event.target.name],
+      percentage: event.target.value
+    };
+  };
+
+  projectSelected = event => {
+    // Save percentage for this project
+    this.projectsValue[event.target.name] = {
+      ...this.projectsValue[event.target.name],
+      project: event.target.value
+    };
   };
 
   // Send filled report to DB
   submit = () => {
-    const tasks = gridHandler.getJsonData(this.grid);
-    tasks.date = this.getDate();
 
-    const report = {
-      project: this.props.match.params.projectNumber,
+    const report = {        
       user: this.props.user.id,
       discipline: this.props.user.discipline,
-      date: tasks.date,
-      tasks: tasks.tasks
-    };
+      date: this.getDate(),
+      projects:[]
+    }
 
-    this.props.createWeeklyReport(report);
+    this.projectRows.forEach(grid => {
+      const id = grid.entBox.id;
+      const tasks = gridHandler.getJsonData(grid);      
+      const projects = {
+        participationPersentage:this.projectsValue[id].percentage,
+        project: this.projectsValue[id].project,
+        tasks
+      }
+      report.projects.push(projects);
+    })
+
+    this.props.createCustomReport(report);
   };
 
   // Generate current date
@@ -103,7 +159,6 @@ class CustomReportGrid extends React.Component {
 
     const hh = today.getHours();
     const min = today.getSeconds();
-    
 
     today = mm + "/" + dd + "/" + yyyy + " " + hh + ":" + min;
     return today;
@@ -111,35 +166,59 @@ class CustomReportGrid extends React.Component {
 
   render() {
     const { weeklyReport } = this.props;
-    const { user } = this.props;
 
     let gridContent;
-
-    if (weeklyReport.loading) {
-      gridContent = <Spinner />;
-    } else 
-    if (weeklyReport.isExist || user.canEdit) {
-      gridContent = (
-        <div>          
-            <div className="gridEditBtns">
-              <button onClick={this.moveUp.bind(this)}>Вверх</button>
-              <button onClick={this.moveDown.bind(this)}>Вниз</button>
-              <button onClick={this.addRowBelow.bind(this)}>Добавить чертеж</button>              
-              {/* <button onClick={this.addRowAbove.bind(this)}>Добавить сверху</button> */}
-              {/* <button onClick={this.addRowBelow.bind(this)}>Добавить снизу</button> */}
-              <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
-            </div>          
-          <button onClick={this.setRowSpan.bind(this)}>Отправить</button>          
-          <div id={"gridbox"} ref={this.gridRef} style={{ width: "auto", overflow: "none" }} />
+    gridContent = this.projectIds.map(item => (
+      <div className={item} style={{ display: "flex" }}>
+        <div
+          className="firstcolumn"
+          style={{ borderWidth: "1px 0px 1px 1px", borderStyle: "solid" }}
+        >
+          <select
+            name={item}
+            defaultValue=""
+            onChange={this.projectSelected.bind(this)}
+            style={{
+              height: "100%",
+              width: "136px",
+              display: "table-cell",
+              border: "none"
+            }}
+          >
+            {this.projectsList}
+          </select>
+          <input
+            name={item}
+            type="number"
+            onChange={this.validatePercentage.bind(this)}
+            style={{
+              display: "table-cell",
+              height: "100%",
+              width: "66px",
+              border: "none",
+              borderLeft: "1px solid"
+            }}
+          />
         </div>
-      );
-    } else {
-      gridContent = <p>There's no report</p>
-    }
+        <div key={item} id={item} style={{ width: "auto", overflow: "none" }} />
+      </div>
+    ));
 
     return (
       <div>
-      {gridContent}
+        <div className="gridEditBtns">
+          <button onClick={this.moveUp.bind(this)}>Вверх</button>
+          <button onClick={this.moveDown.bind(this)}>Вниз</button>
+          <button onClick={this.addRow.bind(this)}>Добавить чертеж</button>
+          <button onClick={this.addProjectRow.bind(this)}>
+            Добавить проект
+          </button>
+          {/* <button onClick={this.addRow.bind(this)}>Добавить снизу</button> */}
+          <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
+          <button onClick={this.submit.bind(this)}>Отправить</button>
+        </div>
+        <div id={"gridbox"} style={{ width: "auto", overflow: "none" }} />
+        <div id="grid-container">{gridContent}</div>
       </div>
     );
   }
@@ -147,10 +226,11 @@ class CustomReportGrid extends React.Component {
 
 const mapStateToProps = state => ({
   weeklyReport: state.weeklyReport,
-  user: state.auth.user
+  user: state.auth.user,
+  projects: state.project
 });
 
 export default connect(
   mapStateToProps,
-  { createWeeklyReport, getLastReport }
+  { createCustomReport, getLastCustomReport, getProjects }
 )(CustomReportGrid);

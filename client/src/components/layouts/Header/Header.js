@@ -7,11 +7,9 @@ import avatar from './img/Avatar.svg'
 class Header extends Component {
     render() {
         const {user} = this.props.auth
-        
-            
-            
+        const isAuthenticated = this.props.auth.isAuthenticated;
       return (
-          
+          isAuthenticated ?
         <header className="header">  
                 <nav className="navbar navbar-expand-lg">
                     <a className="navbar-brand" href="#">
@@ -30,6 +28,7 @@ class Header extends Component {
                     </div>
                 </nav>
             </header>
+            : <div></div>
       );
     }
   }

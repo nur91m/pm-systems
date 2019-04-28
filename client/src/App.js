@@ -39,10 +39,8 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <div className="app-context">              
-              <Switch>
-                <PrivateRoute path="/" component={Header}/>
-              </Switch>
+            <div className="app-context"> 
+              <Route path="/" component={Header}/>
               <Switch>
                 <PrivateRoute exact path="/" component={Home}/>
               </Switch>

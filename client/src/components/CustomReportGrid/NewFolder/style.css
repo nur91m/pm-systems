@@ -1,0 +1,31 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  table {
+      height: 100%;
+  }
+
+  .header {
+      height: 25px;
+  }
+
+  .first, .second {
+      display: block;
+      float: left;
+  }
+
+.content {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.common {
+    height: 34%;
+}
+.common2 {
+    height: 100%;
+}
