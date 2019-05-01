@@ -75,22 +75,13 @@
       const row = {
         id: task._id,
         data: [
-          Number(task.order),
-          String(task.activityID),
+          "",
+          "",
           String(task.description),
-          String(task.drawingNumber),
-          Number(task.budgetHours),
-          Number(task.actualHours),
-          Number(task.earnedHours),
-          Number(task.remainingHours),
-          Number(task.progress),
-          new Date(task.changedDate),
-          String(task.comments),
-          Number(task.docCount),
-          Number(task.totalHours),
-          isEmpty(String(task.drawn1)) ? '' : String(task.drawn1),
-          isEmpty(String(task.drawn2)) ? '' : String(task.drawn2),
-          isEmpty(String(task.drawn3)) ? '' : String(task.drawn3)
+          String(task.sheetCount),
+          String(task.sheetSize),
+          String(task.progress),
+          String(task.comments)          
         ]
       };
       return row;

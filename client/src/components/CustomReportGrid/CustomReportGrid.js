@@ -32,20 +32,70 @@ class CustomReportGrid extends React.Component {
   componentDidUpdate() {
     // Add DOM element for new project row
     if (this.isProjectRowAdded) {
-      const id = this.projectIds[this.projectIds.length - 1];
-      const grid = gridHandler.initCustomReport(id, false, this.onCellClicked);
-      this.projectRows.push(grid);
 
-      const rowUid = grid.uid();
-      grid.addRow(rowUid, [], 0);
+
+      if(this.projectIds.length-this.projectRows.length>1) {
+        this.projectIds.forEach(id => {
+          const grid = gridHandler.initCustomReport(id, false, this.onCellClicked);
+          this.projectRows.push(grid);
+        },this)
+      } else {
+        const id = this.projectIds[this.projectIds.length - 1];
+        const grid = gridHandler.initCustomReport(id, false, this.onCellClicked);
+        this.projectRows.push(grid);  
+        const rowUid = grid.uid();
+        grid.addRow(rowUid, [], 0);
+      }
+
       this.isProjectRowAdded = false;
+      
+      let customReport = this.props.customReport;
+
+      if(!isEmpty(this.loadedCustomReport)) {
+        customReport = this.loadedCustomReport;
+      }
+      if(!isEmpty(customReport) && !isEmpty(customReport.projects)){
+        
+        this.projectRows.forEach((grid, index) => {
+          grid.clearAll();
+          this.loadedCustomReport={...customReport};
+          const project = this.loadedCustomReport.projects[index];
+          const jsonData = gridHandler.convertToJson(project.tasks)
+          gridHandler.parse(grid, jsonData); 
+          const id = grid.entBox.id;
+          this.projectsValue[id] = {percentage: project.participationPersentage, project: project.project};
+
+          document.getElementsByName("S"+id)[0].value = project.project;
+          document.getElementsByName("I"+id)[0].value = project.participationPersentage;
+
+          console.log(this[id]);
+        },this)
+        this.loadedCustomReport.projects = [];
+      }
+      
+      
     }
+
+    const ids = this.projectIds.map(id => (
+      document.getElementById(id)
+    ))
+    console.log(ids);
+    
   }
 
   componentWillReceiveProps(props) {
 
     const projects = props.projects;
+    const customReport = props.customReport;
 
+    // Load tasks
+    if(!isEmpty(customReport) && !isEmpty(customReport.projects)){
+      customReport.projects.forEach(project => {
+        this.addProjectRow(project.project);
+      },this)
+    }
+
+    // Load Project List
     if (!this.projectsList && !isEmpty(projects)) {
       this.projectsList = projects.map(project => (
         <option value={project.orderNumber}>
@@ -73,10 +123,13 @@ class CustomReportGrid extends React.Component {
     this.grid.addRow(rowUid, [], id);
   };
 
-  addProjectRow = () => {
+  addProjectRow = (projectNumber) => {
     this.isProjectRowAdded = true;
     const id = uuidv1();
     this.projectIds.push(id);
+
+    
+
     this.forceUpdate();
   };
 
@@ -111,17 +164,20 @@ class CustomReportGrid extends React.Component {
     if (event.target.value > 100) {
       event.target.value = 100;
     }
+
+    const name = event.target.name.substring(1)
     // Save percentage for this project
-    this.projectsValue[event.target.name] = {
-      ...this.projectsValue[event.target.name],
+    this.projectsValue[name] = {
+      ...this.projectsValue[name],
       percentage: event.target.value
     };
   };
 
   projectSelected = event => {
-    // Save percentage for this project
-    this.projectsValue[event.target.name] = {
-      ...this.projectsValue[event.target.name],
+    const name = event.target.name.substring(1)
+    // Save project name for this project
+    this.projectsValue[name] = {
+      ...this.projectsValue[name],
       project: event.target.value
     };
   };
@@ -145,7 +201,7 @@ class CustomReportGrid extends React.Component {
         tasks
       }
       report.projects.push(projects);
-    })
+    },this)
 
     this.props.createCustomReport(report);
   };
@@ -175,7 +231,7 @@ class CustomReportGrid extends React.Component {
           style={{ borderWidth: "1px 0px 1px 1px", borderStyle: "solid" }}
         >
           <select
-            name={item}
+            name={"S"+item}            
             defaultValue=""
             onChange={this.projectSelected.bind(this)}
             style={{
@@ -188,7 +244,7 @@ class CustomReportGrid extends React.Component {
             {this.projectsList}
           </select>
           <input
-            name={item}
+            name={"I"+item}
             type="number"
             onChange={this.validatePercentage.bind(this)}
             style={{
@@ -225,9 +281,10 @@ class CustomReportGrid extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  weeklyReport: state.weeklyReport,
+  customReport: state.customReport,
   user: state.auth.user,
   projects: state.project
+  
 });
 
 export default connect(
