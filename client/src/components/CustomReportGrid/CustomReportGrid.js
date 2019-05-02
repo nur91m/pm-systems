@@ -32,8 +32,6 @@ class CustomReportGrid extends React.Component {
   componentDidUpdate() {
     // Add DOM element for new project row
     if (this.isProjectRowAdded) {
-
-
       if(this.projectIds.length-this.projectRows.length>1) {
         this.projectIds.forEach(id => {
           const grid = gridHandler.initCustomReport(id, false, this.onCellClicked);
@@ -47,8 +45,7 @@ class CustomReportGrid extends React.Component {
         grid.addRow(rowUid, [], 0);
       }
 
-      this.isProjectRowAdded = false;
-      
+      this.isProjectRowAdded = false;      
       let customReport = this.props.customReport;
 
       if(!isEmpty(this.loadedCustomReport)) {
@@ -72,15 +69,13 @@ class CustomReportGrid extends React.Component {
         },this)
         this.loadedCustomReport.projects = [];
       }
-      
-      
     }
 
     const ids = this.projectIds.map(id => (
       document.getElementById(id)
     ))
     console.log(ids);
-    
+
   }
 
   componentWillReceiveProps(props) {
@@ -127,9 +122,6 @@ class CustomReportGrid extends React.Component {
     this.isProjectRowAdded = true;
     const id = uuidv1();
     this.projectIds.push(id);
-
-    
-
     this.forceUpdate();
   };
 
@@ -143,11 +135,15 @@ class CustomReportGrid extends React.Component {
           return true;
         } else {
           this.projectIds.splice(index, 1);
+          
+          const element = document.getElementsByClassName(item.entBox.id)[0];
+          element.parentNode.removeChild(element);
+
           this.grid.destructor();
           return false;
         }
       }, this);
-      this.forceUpdate();
+      
     }
   };
 
@@ -228,17 +224,18 @@ class CustomReportGrid extends React.Component {
       <div className={item} style={{ display: "flex" }}>
         <div
           className="firstcolumn"
-          style={{ borderWidth: "1px 0px 1px 1px", borderStyle: "solid" }}
+          style={{ borderWidth: "1px 0px 1px 1px", borderStyle: "solid"}}
         >
           <select
             name={"S"+item}            
-            defaultValue=""
+            
             onChange={this.projectSelected.bind(this)}
             style={{
               height: "100%",
               width: "136px",
               display: "table-cell",
-              border: "none"
+              border: "none",
+              textAlign: "center" 
             }}
           >
             {this.projectsList}
@@ -252,7 +249,8 @@ class CustomReportGrid extends React.Component {
               height: "100%",
               width: "66px",
               border: "none",
-              borderLeft: "1px solid"
+              borderLeft: "1px solid",
+              textAlign: "center" 
             }}
           />
         </div>
