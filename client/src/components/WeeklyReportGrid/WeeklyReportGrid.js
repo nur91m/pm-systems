@@ -73,8 +73,6 @@ class WeeklyReportGrid extends React.Component {
   addGroupRow = () => {
     const uid = this.addRowBelow();
     console.log(uid);
-
-    const index = this.grid.getRowIndex(uid);
     this.grid.callEvent("onGridReconstructed", []);
   };
   deleteRow = () => {

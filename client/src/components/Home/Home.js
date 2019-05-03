@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 
@@ -38,7 +38,7 @@ class Home extends Component {
             </div>
           </div>
         </div>
-        {user.role != "Employee" && (
+        {user.role !== "Employee" && (
           <div>
             <div className="row">
               <div className="col-lg-10 report__title">

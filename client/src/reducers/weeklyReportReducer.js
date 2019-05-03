@@ -1,8 +1,7 @@
 import isEmpty from '../validation/is-empty'
 import {
   CREATE_WEEKLY_REPORT,
-  GET_WEEKLY_REPORT,
-  GET_ERRORS,
+  GET_WEEKLY_REPORT,  
   WEEKLY_REPORT_LOADING
 } from "../actions/types";
 

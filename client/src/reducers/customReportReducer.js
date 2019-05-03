@@ -1,6 +1,5 @@
 import isEmpty from '../validation/is-empty'
-import {  
-  GET_ERRORS,  
+import {    
   GET_CUSTOM_REPORT
 } from "../actions/types";
 

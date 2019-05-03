@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { createCustomReport, getLastCustomReport } from "../../actions/reportActions";
 import { getProjects } from "../../actions/projectActions";
 import isEmpty from "../../validation/is-empty";
-import Spinner from "../common/Spinner";
+
 
 const uuidv1 = require("uuid/v1");
 
@@ -84,10 +84,10 @@ class CustomReportGrid extends React.Component {
     const customReport = props.customReport;
 
     // Load tasks
-    if(!isEmpty(customReport) && !isEmpty(customReport.projects)){
+    if(!isEmpty(customReport) && !isEmpty(customReport.projects) && isEmpty(this.projectIds)){      
       customReport.projects.forEach(project => {
         this.addProjectRow(project.project);
-      },this)
+      },this)      
     }
 
     // Load Project List
@@ -99,6 +99,7 @@ class CustomReportGrid extends React.Component {
       ));
       const firstItem = <option value="" selected disabled hidden>Выберите проект</option>;
       this.projectsList.unshift(firstItem);
+      console.log('Load Project List')
     }
   }
 
@@ -217,8 +218,7 @@ class CustomReportGrid extends React.Component {
   }
 
   render() {
-    const { weeklyReport } = this.props;
-
+    
     let gridContent;
     gridContent = this.projectIds.map(item => (
       <div className={item} style={{ display: "flex" }}>

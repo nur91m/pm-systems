@@ -1,4 +1,4 @@
-import {GET_PROJECTS, GET_ERRORS } from "../actions/types";
+import {GET_PROJECTS } from "../actions/types";
 
 const initialState = {
   

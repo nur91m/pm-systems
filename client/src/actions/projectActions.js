@@ -1,7 +1,6 @@
-import {GET_PROJECTS, GET_ERRORS, SET_CURRENT_USER} from './types';
+import {GET_PROJECTS} from './types';
 import axios from 'axios'
-import setAuthToken from '../utils/setAuthToken';
-import jwtDecode from 'jwt-decode'
+
 
 //Get all projects 
 export const getProjects = () => dispatch =>  {

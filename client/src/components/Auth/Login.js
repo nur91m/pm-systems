@@ -87,7 +87,7 @@ export class Login extends Component {
               >
                 Войти
               </button>
-              <a href="#">Забыли пароль?</a>
+              <a href="_blank" onClick={()=>{alert('Пожалуйста, обратитесь в отдел УП')}}>Забыли пароль?</a>
             </div>
           </div>
         </div>
