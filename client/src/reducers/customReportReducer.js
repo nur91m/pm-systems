@@ -1,6 +1,6 @@
 import isEmpty from '../validation/is-empty'
 import {    
-  GET_CUSTOM_REPORT
+  GET_CUSTOM_REPORT, CUSTOM_REPORT_LOADING
 } from "../actions/types";
 
 const initialState = {
@@ -11,15 +11,28 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  switch (action.type) {        
+  switch (action.type) {    
+    case CUSTOM_REPORT_LOADING:
+      return {
+        ...state,
+        loading: true
+      }    
     case GET_CUSTOM_REPORT:
-      console.log(action.payload)
+      if (action.payload.isExist) {
+        return {
+          id: "",
+          projects: "",
+          isExist: false,
+          loading: false
+        }
+      } else {
       return {
         id: action.payload._id,
         projects: action.payload.projects,
         isExist: !isEmpty(action.payload.projects),
         loading: false
       };
+    }
     default:
       return state;
   }

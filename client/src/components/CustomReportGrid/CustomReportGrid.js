@@ -3,16 +3,21 @@ import "../../utils/codebase/dhtmlxgrid.css";
 import "./CustomReportGrid.css";
 import * as gridHandler from "./customReportHandler";
 import { connect } from "react-redux";
-import { createCustomReport, getLastCustomReport } from "../../actions/reportActions";
+import {
+  createCustomReport,
+  getLastCustomReport
+} from "../../actions/reportActions";
 import { getProjects } from "../../actions/projectActions";
 import isEmpty from "../../validation/is-empty";
-
+import Spinner from "../common/Spinner";
 
 const uuidv1 = require("uuid/v1");
 
 class CustomReportGrid extends React.Component {
   constructor() {
     super();
+
+    this.gridContainerRef = React.createRef();
 
     this.projectIds = [];
     this.projectRows = [];
@@ -21,85 +26,95 @@ class CustomReportGrid extends React.Component {
   }
 
   componentDidMount() {
-
     this.props.getProjects();
     this.props.getLastCustomReport();
-
-    
-    gridHandler.initCustomReport("gridbox", true);
   }
 
   componentDidUpdate() {
+
+    if(!isEmpty(this.gridContainerRef.current)) {
+      gridHandler.initCustomReport("gridHeader", true);
+    }
+
     // Add DOM element for new project row
-    if (this.isProjectRowAdded) {
-      if(this.projectIds.length-this.projectRows.length>1) {
+    if (this.isProjectRowAdded && !isEmpty(this.gridContainerRef.current)) {
+      if (this.projectIds.length - this.projectRows.length > 1) {
         this.projectIds.forEach(id => {
-          const grid = gridHandler.initCustomReport(id, false, this.onCellClicked);
+          const grid = gridHandler.initCustomReport(
+            id,
+            false,
+            this.onCellClicked
+          );
           this.projectRows.push(grid);
-        },this)
+        }, this);
       } else {
         const id = this.projectIds[this.projectIds.length - 1];
-        const grid = gridHandler.initCustomReport(id, false, this.onCellClicked);
-        this.projectRows.push(grid);  
+        const grid = gridHandler.initCustomReport(
+          id,
+          false,
+          this.onCellClicked
+        );
+        this.projectRows.push(grid);
         const rowUid = grid.uid();
         grid.addRow(rowUid, [], 0);
       }
 
-      this.isProjectRowAdded = false;      
+      this.isProjectRowAdded = false;
       let customReport = this.props.customReport;
 
-      if(!isEmpty(this.loadedCustomReport)) {
+      if (!isEmpty(this.loadedCustomReport)) {
         customReport = this.loadedCustomReport;
       }
-      if(!isEmpty(customReport) && !isEmpty(customReport.projects)){
-        
+      if (!isEmpty(customReport) && !isEmpty(customReport.projects)) {
         this.projectRows.forEach((grid, index) => {
           grid.clearAll();
-          this.loadedCustomReport={...customReport};
+          this.loadedCustomReport = { ...customReport };
           const project = this.loadedCustomReport.projects[index];
-          const jsonData = gridHandler.convertToJson(project.tasks)
-          gridHandler.parse(grid, jsonData); 
+          const jsonData = gridHandler.convertToJson(project.tasks);
+          gridHandler.parse(grid, jsonData);
           const id = grid.entBox.id;
-          this.projectsValue[id] = {percentage: project.participationPersentage, project: project.project};
+          this.projectsValue[id] = {
+            percentage: project.participationPersentage,
+            project: project.project
+          };
 
-          document.getElementsByName("S"+id)[0].value = project.project;
-          document.getElementsByName("I"+id)[0].value = project.participationPersentage;
-
-          console.log(this[id]);
-        },this)
+          document.getElementsByName("S" + id)[0].value = project.project;
+          document.getElementsByName("I" + id)[0].value =
+            project.participationPersentage;
+        }, this);
         this.loadedCustomReport.projects = [];
       }
     }
-
-    const ids = this.projectIds.map(id => (
-      document.getElementById(id)
-    ))
-    console.log(ids);
-
   }
 
   componentWillReceiveProps(props) {
-
     const projects = props.projects;
     const customReport = props.customReport;
 
     // Load tasks
-    if(!isEmpty(customReport) && !isEmpty(customReport.projects) && isEmpty(this.projectIds)){      
+    if (
+      !isEmpty(customReport) &&
+      !isEmpty(customReport.projects) &&
+      isEmpty(this.projectIds)
+    ) {
       customReport.projects.forEach(project => {
         this.addProjectRow(project.project);
-      },this)      
+      }, this);
     }
 
     // Load Project List
     if (!this.projectsList && !isEmpty(projects)) {
       this.projectsList = projects.map(project => (
-        <option value={project.orderNumber}>
+        <option key={uuidv1()} value={project.orderNumber}>
           {project.orderNumber + " " + project.name}
         </option>
       ));
-      const firstItem = <option value="" selected disabled hidden>Выберите проект</option>;
+      const firstItem = (
+        <option key={uuidv1()} value="" selected disabled hidden>
+          Выберите проект
+        </option>
+      );
       this.projectsList.unshift(firstItem);
-      console.log('Load Project List')
     }
   }
 
@@ -119,7 +134,7 @@ class CustomReportGrid extends React.Component {
     this.grid.addRow(rowUid, [], id);
   };
 
-  addProjectRow = (projectNumber) => {
+  addProjectRow = () => {
     this.isProjectRowAdded = true;
     const id = uuidv1();
     this.projectIds.push(id);
@@ -136,7 +151,7 @@ class CustomReportGrid extends React.Component {
           return true;
         } else {
           this.projectIds.splice(index, 1);
-          
+
           const element = document.getElementsByClassName(item.entBox.id)[0];
           element.parentNode.removeChild(element);
 
@@ -144,7 +159,6 @@ class CustomReportGrid extends React.Component {
           return false;
         }
       }, this);
-      
     }
   };
 
@@ -162,7 +176,7 @@ class CustomReportGrid extends React.Component {
       event.target.value = 100;
     }
 
-    const name = event.target.name.substring(1)
+    const name = event.target.name.substring(1);
     // Save percentage for this project
     this.projectsValue[name] = {
       ...this.projectsValue[name],
@@ -171,7 +185,7 @@ class CustomReportGrid extends React.Component {
   };
 
   projectSelected = event => {
-    const name = event.target.name.substring(1)
+    const name = event.target.name.substring(1);
     // Save project name for this project
     this.projectsValue[name] = {
       ...this.projectsValue[name],
@@ -181,30 +195,37 @@ class CustomReportGrid extends React.Component {
 
   // Send filled report to DB
   submit = () => {
-
-    const report = {        
+    const report = {
       user: this.props.user.id,
       discipline: this.props.user.discipline,
       date: this.getDate(),
-      projects:[]
-    }
+      projects: []
+    };
 
     this.projectRows.forEach(grid => {
       const id = grid.entBox.id;
-      const tasks = gridHandler.getJsonData(grid);      
+      const tasks = gridHandler.getJsonData(grid);
       const projects = {
-        participationPersentage:this.projectsValue[id].percentage,
+        participationPersentage: this.projectsValue[id].percentage,
         project: this.projectsValue[id].project,
         tasks
-      }
+      };
       report.projects.push(projects);
-    },this)
+    }, this);
 
-    this.props.createCustomReport(report);
+    // Edit if report has been created in this month
+    if(this.props.customReport.isExist) {
+      this.props.editCustomReport(report);
+    } 
+    // Else create new report for this month
+    else {
+      this.props.createCustomReport(report);
+    }
+    
   };
 
   // Generate current date
-  getDate() {
+  getDate(isNormal) {
     let today = new Date();
     const dd = String(today.getDate()).padStart(2, "0");
     const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
@@ -213,35 +234,41 @@ class CustomReportGrid extends React.Component {
     const hh = today.getHours();
     const min = today.getSeconds();
 
-    today = mm + "/" + dd + "/" + yyyy + " " + hh + ":" + min;
+    today = isNormal ? (dd + "/" + mm + "/" + yyyy + " " + hh + ":" + min) : 
+    (mm + "/" + dd + "/" + yyyy + " " + hh + ":" + min);
     return today;
   }
 
   render() {
-    
+
+    const { customReport } = this.props;
+
+    let content;
     let gridContent;
     gridContent = this.projectIds.map(item => (
-      <div className={item} style={{ display: "flex" }}>
+      <div key={item + 1} className={item} style={{ display: "flex" }}>
         <div
+          key={item + 2}
           className="firstcolumn"
-          style={{ borderWidth: "1px 0px 1px 1px", borderStyle: "solid"}}
+          style={{ borderWidth: "1px 0px 1px 1px", borderStyle: "solid" }}
         >
           <select
-            name={"S"+item}            
-            
+            key={item + 3}
+            name={"S" + item}
             onChange={this.projectSelected.bind(this)}
             style={{
               height: "100%",
               width: "136px",
               display: "table-cell",
               border: "none",
-              textAlign: "center" 
+              textAlign: "center"
             }}
           >
             {this.projectsList}
           </select>
           <input
-            name={"I"+item}
+            key={item + 4}
+            name={"I" + item}
             type="number"
             onChange={this.validatePercentage.bind(this)}
             style={{
@@ -250,29 +277,46 @@ class CustomReportGrid extends React.Component {
               width: "66px",
               border: "none",
               borderLeft: "1px solid",
-              textAlign: "center" 
+              textAlign: "center"
             }}
           />
         </div>
-        <div key={item} id={item} style={{ width: "auto", overflow: "none" }} />
+        <div
+          key={item + 5}
+          id={item}
+          style={{ width: "auto", overflow: "none" }}
+        />
       </div>
     ));
 
+    if(customReport.loading) {
+      content = <Spinner />
+    } else {
+      content = (
+        <div ref={this.gridContainerRef} >
+          <div className="gridEditBtns">
+            <button onClick={this.moveUp.bind(this)}>Вверх</button>
+            <button onClick={this.moveDown.bind(this)}>Вниз</button>
+            <button onClick={this.addRow.bind(this)}>Добавить чертеж</button>
+            <button onClick={this.addProjectRow.bind(this)}>
+              Добавить проект
+            </button>
+            {/* <button onClick={this.addRow.bind(this)}>Добавить снизу</button> */}
+            <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
+            <button onClick={this.submit.bind(this)}>Отправить</button>
+          </div>
+          <div id={"gridHeader"} style={{ width: "auto", overflow: "none" }} />
+          <div id="grid-container">{gridContent}</div>
+        </div>
+      );
+    }
+
     return (
       <div>
-        <div className="gridEditBtns">
-          <button onClick={this.moveUp.bind(this)}>Вверх</button>
-          <button onClick={this.moveDown.bind(this)}>Вниз</button>
-          <button onClick={this.addRow.bind(this)}>Добавить чертеж</button>
-          <button onClick={this.addProjectRow.bind(this)}>
-            Добавить проект
-          </button>
-          {/* <button onClick={this.addRow.bind(this)}>Добавить снизу</button> */}
-          <button onClick={this.deleteRow.bind(this)}>Удалить строку</button>
-          <button onClick={this.submit.bind(this)}>Отправить</button>
-        </div>
-        <div id={"gridbox"} style={{ width: "auto", overflow: "none" }} />
-        <div id="grid-container">{gridContent}</div>
+        <h3>
+          Ежемесячный отчет за {this.getDate(true).substring(3,10)}
+        </h3>
+        {content}
       </div>
     );
   }
@@ -282,7 +326,6 @@ const mapStateToProps = state => ({
   customReport: state.customReport,
   user: state.auth.user,
   projects: state.project
-  
 });
 
 export default connect(

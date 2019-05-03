@@ -3,6 +3,8 @@ const router = express.Router();
 const passport = require("passport");
 const Roles = require("../../models/Roles");
 const jwt_decode = require("jwt-decode");
+const isEmpty = require('../../validation/is-empty')
+
 
 //Load models
 const WeeklyReport = require("../../models/WeeklyReport");
@@ -176,9 +178,14 @@ router.post(
       .sort({ date: -1 })
       .limit(1)
       .then(report => {
-        if (report) {
+        if (!isEmpty(report)) {
           const month = report[0].date.getMonth();
-          report = month == new Date().getMonth() ? report[0] : {report: 'Пусто'};
+          report = month == new Date().getMonth() ? report[0] : {isExist: false};
+          
+          res.status(200).json(report);
+        } else {
+          report = {isExist: false};
+          console.log(report)
           res.status(200).json(report);
         }
       })
