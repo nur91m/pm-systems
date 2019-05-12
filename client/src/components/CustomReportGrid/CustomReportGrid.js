@@ -10,6 +10,8 @@ import {
 import { getProjects } from "../../actions/projectActions";
 import isEmpty from "../../validation/is-empty";
 import Spinner from "../common/Spinner";
+import moment from "moment"
+import 'moment/locale/ru'
 
 const uuidv1 = require("uuid/v1");
 
@@ -198,7 +200,7 @@ class CustomReportGrid extends React.Component {
     const report = {
       user: this.props.user.id,
       discipline: this.props.user.discipline,
-      date: this.getDate(),
+      date: moment(),
       projects: []
     };
 
@@ -314,7 +316,8 @@ class CustomReportGrid extends React.Component {
     return (
       <div>
         <h3>
-          Ежемесячный отчет за {this.getDate(true).substring(3,10)}
+          
+          Ежемесячный отчет за {moment().locale('ru').format("ll")}
         </h3>
         {content}
       </div>

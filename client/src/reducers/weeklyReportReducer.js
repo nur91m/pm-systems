@@ -6,7 +6,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  isExist: false,
+  isExist: false,  
   tasks: [],
   id: "",
   loading: false

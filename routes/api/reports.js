@@ -3,8 +3,8 @@ const router = express.Router();
 const passport = require("passport");
 const Roles = require("../../models/Roles");
 const jwt_decode = require("jwt-decode");
-const isEmpty = require('../../validation/is-empty')
-
+const isEmpty = require("../../validation/is-empty");
+const moment = require("moment");
 
 //Load models
 const WeeklyReport = require("../../models/WeeklyReport");
@@ -26,7 +26,8 @@ router.post(
       .limit(1)
       .then(report => {
         if (report.length != 0) {
-          return res.status(200).json(report[0]);
+          report = report[0];
+          return res.status(200).json(report);
         } else {
           return res.status(200).json(report);
         }
@@ -48,7 +49,6 @@ router.post(
       .then(reports => {
         reports.forEach(report => {
           let date = new Date(report.date);
-          console.log(date);
 
           date = `${date.getDate()}-${date.getMonth() +
             1}-${date.getFullYear()}`;
@@ -179,13 +179,14 @@ router.post(
       .limit(1)
       .then(report => {
         if (!isEmpty(report)) {
-          const month = report[0].date.getMonth();
-          report = month == new Date().getMonth() ? report[0] : {isExist: false};
-          
+          const month = moment(report[0].date).month();
+
+          report = month == moment().month() ? report[0] : { isExist: false };
+
           res.status(200).json(report);
         } else {
-          report = {isExist: false};
-          console.log(report)
+          report = { isExist: false };
+          console.log(report);
           res.status(200).json(report);
         }
       })

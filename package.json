@@ -13,11 +13,13 @@
   "author": "Nursultan Yessirkegenov",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
+    "moment": "^2.24.0",
     "mongoose": "^5.4.20",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",

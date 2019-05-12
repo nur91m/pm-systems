@@ -8,6 +8,7 @@ import {
   CUSTOM_REPORT_LOADING
 } from "./types";
 import axios from "axios";
+import {getProject} from "./projectActions"
 
 //Create report
 
@@ -78,10 +79,10 @@ export const editWeeklyReport = reportData => dispatch => {
 
 // Get last weekly report
 export const getLastWeeklyReport = reportData => dispatch => {
-  dispatch(setWeeklyReportLoading());
+  dispatch(setWeeklyReportLoading()); 
   axios
     .post("/api/reports/weekly-report/last", reportData)
-    .then(res => {
+      .then(res => {      
       dispatch({
         type: GET_WEEKLY_REPORT,
         payload: res.data

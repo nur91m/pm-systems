@@ -4,13 +4,18 @@ import "./WeeklyReportGrid.css";
 import * as gridHandler from "./weeklyReportHandler";
 import { connect } from "react-redux";
 import { createWeeklyReport, getLastWeeklyReport } from "../../actions/reportActions";
+import { getProject } from "../..//actions/projectActions"
 import isEmpty from "../../validation/is-empty";
 import Spinner from "../common/Spinner";
+import { getTime } from "../../utils/getTime";
+import moment from 'moment'
 
 class WeeklyReportGrid extends React.Component {
   constructor() {
     super();
     this.gridRef = React.createRef();
+
+    getTime();
   }
 
   componentWillMount() {
@@ -18,6 +23,7 @@ class WeeklyReportGrid extends React.Component {
 
     // Get last WeeklyReport from DB
     const req = { projectNumber, discipline: this.props.user.discipline };
+    this.props.getProject(projectNumber);
     this.props.getLastWeeklyReport(req);
   }
 
@@ -58,22 +64,20 @@ class WeeklyReportGrid extends React.Component {
     }
   };
 
-  addRowAbove = () => {
-    const id = this.grid.getRowIndex(this.grid.getSelectedRowId());
-
-    this.grid.addRow(this.grid.uid(), [], id);
-  };
   addRowBelow = () => {
     const id = this.grid.getRowIndex(this.grid.getSelectedRowId()) + 1;
-    const rowUid = this.grid.uid();
-    this.grid.addRow(rowUid, [], id);
-    return rowUid;
+    const uid = this.grid.uid();
+    this.grid.addRow(uid, [], id);
+    this.grid.cells(uid, 17).setValue(false);
+    this.grid.cells(uid, 16).setValue(1);
+    return uid;
   };
 
   addGroupRow = () => {
     const uid = this.addRowBelow();
-    console.log(uid);
-    this.grid.callEvent("onGridReconstructed", []);
+    let data = this.grid.getRowData(uid);  
+    this.grid.cells(uid, 17).setValue(true);
+    this.grid.setRowColor(uid, "#B8CCE4");
   };
   deleteRow = () => {
     const id = this.grid.getSelectedRowId();
@@ -83,7 +87,7 @@ class WeeklyReportGrid extends React.Component {
   // Send filled report to DB
   submit = () => {
     const tasks = gridHandler.getJsonData(this.grid);
-    tasks.date = this.getDate();
+    tasks.date = moment();
 
     const report = {
       project: this.props.match.params.projectNumber,
@@ -92,6 +96,9 @@ class WeeklyReportGrid extends React.Component {
       date: tasks.date,
       tasks: tasks.tasks
     };
+
+    if(this.props.weeklyReport.isExist &&
+      this.props.project.weeklyReportStartDay)
 
     this.props.createWeeklyReport(report);
   };
@@ -142,8 +149,7 @@ class WeeklyReportGrid extends React.Component {
               </button>
             </div>
           )}
-          <button onClick={this.submit.bind(this)}><i className="fas fa-check-square"></i></button>
-          {console.log("Grid Mount")}
+          <button onClick={this.submit.bind(this)}><i className="fas fa-check-square"></i></button>          
           <div
             id={"gridbox"}
             ref={this.gridRef}
@@ -168,10 +174,11 @@ class WeeklyReportGrid extends React.Component {
 
 const mapStateToProps = state => ({
   weeklyReport: state.weeklyReport,
-  user: state.auth.user
+  user: state.auth.user,
+  project: state.project
 });
 
 export default connect(
   mapStateToProps,
-  { createWeeklyReport, getLastWeeklyReport }
+  { createWeeklyReport, getLastWeeklyReport, getProject }
 )(WeeklyReportGrid);

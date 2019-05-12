@@ -59,6 +59,6 @@ textarea {
     font-weight: 700;
 }
 
-div.gridbox_material.gridbox table.obj tr.row-group td{
-    color: white!important;
+div.gridbox_material.gridbox table.obj tr td{
+    border-color: #2e2e2e!important;
 }

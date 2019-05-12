@@ -18,3 +18,20 @@ export const getProjects = () => dispatch =>  {
         })
       );
 }
+
+//Get project by order number
+export const getProject = (orderNumber) => dispatch =>  {
+  axios.get(`/api/projects/order-number/${orderNumber}`)
+  .then(res=>{
+      dispatch({
+          type: GET_PROJECTS,
+          payload: res.data
+      })
+  })
+  .catch(err =>
+      dispatch({
+        type: GET_PROJECTS,
+        payload: null
+      })
+    );
+}

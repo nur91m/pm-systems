@@ -1,17 +1,18 @@
  import isEmpty from '../../validation/is-empty'
+ import moment from 'moment'
 
  export const initWeeklyReport = canEdit => {    
     
     // Grid configurations
-    let colAccess = 'ro,ro,ro,ro,ro,ro,ro,ro,edn,ro,ro,ro,ro,ro,ro,ro';
+    let colAccess = 'ro,ro,ro,ro,ro,ro,ro,ro,edn,ro,ro,ro,ro,ro,ro,ro,ro,ro';
     if(canEdit){
-      colAccess = 'edn,ed,ed,ed,edn,edn,edn,edn,edn,ed,ed,edn,edn,ed,ed,ed';
+      colAccess = 'edn,ed,ed,ed,edn,edn,edn,edn,edn,ed,ed,edn,edn,ed,ed,ed,ed,ed';
     }
-    const colWidth = '40,80,440,80,65,90,90,90,80,100,90,50,65,190,190,190';
+    const colWidth = '40,80,440,80,65,90,90,90,80,100,90,50,65,140,140,140,55,1';
     const headerTitles =
-      '#,Activity ID, Deliverable Description, Drawing Number, Budget hours, Actual Hours, Earned Hours, Remaining Hours, Progress, Дата внесение изменении, Comments, № of docs,Total hours,Исполнитель / Drawn,Исполнитель / Drawn,Исполнитель / Drawn';
+      '#,Activity ID, Deliverable Description, Drawing Number, Budget hours, Actual Hours, Earned Hours, Remaining Hours, Progress, Дата внесение изменении, Comments, № of docs,Total hours,Исполнитель / Drawn,Исполнитель / Drawn,Исполнитель / Drawn, Коэфф., isGroupRow';
   
-    const colValidators = new Array(16);
+    const colValidators = new Array(18);
     colValidators[8] = 'Percentage';
   
     // Create Grid object
@@ -22,6 +23,11 @@
     grid.setInitWidths(colWidth);
     grid.setColTypes(colAccess);
   
+    // Hide isGroupRow column
+    grid.setColumnHidden(17,true);
+    // Hide Coeff column 
+    !canEdit && grid.setColumnHidden(16, true);
+
     // Setting Validators
     grid.setNumberFormat('0', 8, '', '');
     grid.enableValidation(true);
@@ -34,8 +40,8 @@
     grid.enableMultiline(true);
     grid.init();
 
-    
-    grid.enableAlterCss('even', 'uneven');
+    grid.enableResizing("false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
+    //grid.enableAlterCss('even', 'uneven');
 
     
 
@@ -68,7 +74,11 @@
 
   export const parse = (grid,jsonData)=>{
     const gridData = grid;    
-    gridData.parse(jsonData, "json");     
+    gridData.parse(jsonData, "json");
+    jsonData.rows.forEach((row, index) => {
+      row.data[17] && grid.setRowColor(grid.getRowId(index),"#B8CCE4");
+    });
+    
   }
   
   export const getJsonData = grid => {
@@ -98,6 +108,8 @@
         drawn1: isEmpty(cols[13]) ? '' : cols[13],
         drawn2: isEmpty(cols[14]) ? '' : cols[14],
         drawn3: isEmpty(cols[15]) ? '' : cols[15],
+        weight: isEmpty(cols[16]) ? '' : cols[16],
+        isGroupRow: isEmpty(cols[17]) ? false : cols[17]
       };
       
       tasks.push(task);
@@ -119,13 +131,15 @@
           Number(task.earnedHours),
           Number(task.remainingHours),
           Number(task.progress),
-          new Date(task.changedDate),
+          moment(task.changedDate),
           String(task.comments),
           Number(task.docCount),
           Number(task.totalHours),
           isEmpty(String(task.drawn1)) ? '' : String(task.drawn1),
           isEmpty(String(task.drawn2)) ? '' : String(task.drawn2),
-          isEmpty(String(task.drawn3)) ? '' : String(task.drawn3)
+          isEmpty(String(task.drawn3)) ? '' : String(task.drawn3),
+          Number(task.weight),
+          task.isGroupRow
         ]
       };
       return row;

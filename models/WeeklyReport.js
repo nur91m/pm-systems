@@ -17,6 +17,10 @@ const WeeklyReportSchema = new Schema({
   },
   tasks: [
     {
+      isGroupRow: {
+        type: Boolean,
+        default: false
+      },
       order: {
         type: Number
       },
@@ -64,6 +68,10 @@ const WeeklyReportSchema = new Schema({
       },
       drawn3: {
         type: String
+      },
+      weight: {
+        type: Number,
+        default: 1
       }
     }
   ],

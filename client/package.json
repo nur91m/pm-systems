@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "jwt-decode": "^2.2.0",
+    "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-alert": "^5.4.0",
     "react-alert-template-basic": "^1.0.0",

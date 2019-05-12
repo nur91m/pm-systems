@@ -30,9 +30,12 @@ const ProjectSchema = new Schema({
     }
   ],
   status: {
-    type: String
-    
+    type: String    
+  },
+  reportDay: {
+    type: Date
   }
+
 });
 
 module.exports = Project = mongoose.model('projects', ProjectSchema);
