@@ -80,13 +80,13 @@ router.post(
 router.post(
   "/weekly-report",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  async (req, res) => {
     const reportFileds = {};
     reportFileds.project = req.body.project;
     reportFileds.user = req.body.user;
     reportFileds.discipline = req.body.discipline;
     reportFileds.date = new Date(req.body.date);
-    User.findById(req.body.user).then(user => {
+   await User.findById(req.body.user).then(user => {
       if (user.role != Roles.Employee) {
         reportFileds.needsVerification = false;
       }
@@ -109,14 +109,14 @@ router.post(
 router.post(
   "/weekly-report/edit/:reportId",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  async (req, res) => {
     const reportFileds = {};
     reportFileds.project = req.body.project;
     reportFileds.user = req.body.user;
     reportFileds.discipline = req.body.discipline;
     reportFileds.date = new Date(req.body.date);
 
-    User.findById(req.body.user).then(user => {
+   await User.findById(req.body.user).then(user => {
       if (user.role != Roles.Employee) {
         reportFileds.needsVerification = false;
       }
@@ -146,14 +146,14 @@ router.post(
 router.post(
   "/custom-report",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  async (req, res) => {
     const reportFileds = {};
     reportFileds.user = req.body.user;
     reportFileds.discipline = req.body.discipline;
     reportFileds.date = new Date(req.body.date);
     reportFileds.projects = req.body.projects;
 
-    User.findById(req.body.user).then(user => {
+    await User.findById(req.body.user).then(user => {
       if (user.role != Roles.Employee) {
         reportFileds.needsVerification = false;
       }
@@ -201,20 +201,49 @@ router.post(
   }
 );
 
+//  @route  POST /api/reports/custom-report/not-verified
+//  @desc   Get custom report that needs to be verified
+//  @access Private
+router.post(
+  "/custom-report/not-verified",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const user = jwt_decode(req.headers.authorization);    
+    CustomReport.find({ discipline: user.discipline, verified: false })      
+      .then(async reports => {
+        if (!isEmpty(reports)) {
+          let newReports = await Promise.all(reports.map(async (report) => {            
+            return await User.findById(report.user).then(res => {
+              if(res) {             
+              const fullName = `${res.lastName} ${res.name}`;                           
+              return {userName: fullName, report}
+              }
+            })                       
+          }))
+          newReports = newReports.filter(res => res ? true : false)
+          res.status(200).json(newReports);
+        } else {          
+          res.status(404).json({msg: "Report not found"});
+        }
+      })
+      .catch(err => console.log(err));
+  }
+);
+
 //  @route  POST /api/reports/weekly-report/edit/:reportId
 //  @desc   Edit weekly report by id
 //  @access Private
 router.post(
   "/custom-report/edit/:reportId",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  async (req, res) => {
     const reportFileds = {};
     reportFileds.project = req.body.project;
     reportFileds.user = req.body.user;
     reportFileds.discipline = req.body.discipline;
     reportFileds.date = new Date(req.body.date);
 
-    User.findById(req.body.user).then(user => {
+    await User.findById(req.body.user).then(user => {
       if (user.role != Roles.Employee) {
         reportFileds.needsVerification = false;
       }
@@ -239,3 +268,4 @@ router.post(
 );
 
 module.exports = router;
+

@@ -4,7 +4,7 @@ import errorReducer from './errorReducer';
 import weeklyReportReducer from './weeklyReportReducer';
 import customReportReducer from './customReportReducer';
 import projectReducer from './projectReducer'
-
+import reportVerifingReducer from './reportVerifingReducer'
 
 
 export default combineReducers({
@@ -12,5 +12,6 @@ export default combineReducers({
     errors: errorReducer,
     weeklyReport: weeklyReportReducer,
     customReport: customReportReducer,
+    verifingReport: reportVerifingReducer,
     project: projectReducer
 })

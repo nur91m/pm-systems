@@ -4,9 +4,9 @@ import "./WeeklyReportGrid.css";
 import * as gridHandler from "./weeklyReportHandler";
 import { connect } from "react-redux";
 import { createWeeklyReport, getLastWeeklyReport } from "../../actions/reportActions";
-import { getProject } from "../..//actions/projectActions"
+import { getProject } from "../../actions/projectActions"
 import isEmpty from "../../validation/is-empty";
-import Spinner from "../common/Spinner";
+import Spinner from "../common/Spinner"
 import { getTime } from "../../utils/getTime";
 import moment from 'moment'
 

@@ -5,10 +5,11 @@ import {
   GET_CUSTOM_REPORT,
   GET_ERRORS,
   WEEKLY_REPORT_LOADING,
-  CUSTOM_REPORT_LOADING
+  CUSTOM_REPORT_LOADING,
+  VERIFING_CUSTOM_REPORTS_LOADING,
+  GET_VERIFING_CUSTOM_REPORTS
 } from "./types";
 import axios from "axios";
-import {getProject} from "./projectActions"
 
 //Create report
 
@@ -29,6 +30,26 @@ export const getLastCustomReport = () => dispatch => {
     .then(res => {      
       dispatch({
         type: GET_CUSTOM_REPORT,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+// Get custom report that needs to be verified
+export const getCustomReportsToBeVerified = () => dispatch => {
+  dispatch(setReportsLoading());    
+  axios
+    .post("/api/reports/custom-report/not-verified")
+    .then(res => {      
+      dispatch({
+        type: GET_VERIFING_CUSTOM_REPORTS,
         payload: res.data
       });
     })
@@ -102,4 +123,8 @@ export const setWeeklyReportLoading = () => ({
 });
 export const setCustomReportLoading = () => ({
   type: CUSTOM_REPORT_LOADING
+});
+
+export const setReportsLoading = () => ({
+  type: VERIFING_CUSTOM_REPORTS_LOADING
 });
