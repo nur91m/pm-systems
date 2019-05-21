@@ -230,38 +230,21 @@ router.post(
   }
 );
 
-//  @route  POST /api/reports/weekly-report/edit/:reportId
+//  @route  POST /api/reports/custom-report/edit/:reportId
 //  @desc   Edit weekly report by id
 //  @access Private
 router.post(
   "/custom-report/edit/:reportId",
   passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    const reportFileds = {};
-    reportFileds.project = req.body.project;
-    reportFileds.user = req.body.user;
-    reportFileds.discipline = req.body.discipline;
-    reportFileds.date = new Date(req.body.date);
-
-    await User.findById(req.body.user).then(user => {
-      if (user.role != Roles.Employee) {
-        reportFileds.needsVerification = false;
-      }
-    });
-
-    reportFileds.tasks = req.body.tasks;
-
-    WeeklyReport.findByIdAndUpdate(
-      req.params.reportId,
-      { ...reportFileds },
-      { new: true },
+  (req, res) => {    
+    CustomReport.findByIdAndUpdate({_id: req.params.reportId}, req.body, {new:true},
       (err, data) => {
         if (err) {
           return res
             .status(400)
             .json({ msg: "Coud not update report", error: err });
-        }
-        res.status(200).json(data);
+        }        
+        res.status(200).json({isFailed: false, msg: "Successfully updated"});
       }
     );
   }

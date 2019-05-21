@@ -48,7 +48,7 @@ class Home extends Component {
             <div className="row">
               <div className="col-lg-6 report-box confirm-report-box">
                 <div>
-                  <Link to="#" className="btn report__btn confirm-report__btn">
+                  <Link to="/check-report" className="btn report__btn confirm-report__btn">
                     ПРОВЕРКА И ПОДТВЕРЖЕНИЕ ОТЧЕТА ИСПОЛНИТЕЛЯ
                   </Link>
                 </div>

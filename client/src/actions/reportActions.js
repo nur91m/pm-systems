@@ -7,9 +7,12 @@ import {
   WEEKLY_REPORT_LOADING,
   CUSTOM_REPORT_LOADING,
   VERIFING_CUSTOM_REPORTS_LOADING,
-  GET_VERIFING_CUSTOM_REPORTS
+  GET_VERIFING_CUSTOM_REPORTS,
+  VERIFING_STATUS
 } from "./types";
 import axios from "axios";
+
+import isEmpty from "../validation/is-empty"
 
 //Create report
 
@@ -52,6 +55,28 @@ export const getCustomReportsToBeVerified = () => dispatch => {
         type: GET_VERIFING_CUSTOM_REPORTS,
         payload: res.data
       });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+// Update custom report
+export const updateCustomReport = (reportData) => dispatch => {
+  dispatch(setReportsLoading());    
+  axios
+    .post(`/api/reports/custom-report/edit/${reportData._id}`, reportData)
+    .then(res => {
+      
+      // Check if request was report verification
+      if(!isEmpty(res.data.isFailed) && !res.data.isFailed) {
+        dispatch(VERIFING_STATUS);
+      }
+      
     })
     .catch(err => {
       console.log(err);

@@ -1,0 +1,41 @@
+/* the tree node's style */
+.tree-view {
+    overflow-y: hidden;
+  }
+  
+  .tree-view_item {
+    /* immediate child of .tree-view, for styling convenience */
+  }
+  
+  /* style for the children nodes container */
+  .tree-view_children {
+    margin-left: 16px;
+  }
+  
+  .tree-view_children-collapsed {
+    height: 0px;
+  }
+   
+  .node:hover {
+    cursor: pointer;
+    font-weight: 700;
+  }
+  
+  .node.selected {     
+    font-weight: 700;
+  }  
+  
+  .node {     
+    height: 22px;
+ } 
+
+ .info.selected {     
+    font-weight: 700;
+  } 
+  .info:hover{
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  /* rotate the triangle to close it */
+  
