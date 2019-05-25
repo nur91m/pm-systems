@@ -17,23 +17,13 @@ const ProjectSchema = new Schema({
       type: [String],
       required: true
     }
-  ],
-  reports: [
-    {
-      discipline: {
-        type: String        
-      },
-      weeklyReport: {
-        type: Schema.Types.ObjectId,
-        ref: 'weekly-report'
-      }
-    }
-  ],
+  ],  
   status: {
     type: String    
   },
   reportDay: {
-    type: Date
+    type: Number,
+    default: 1
   }
 
 });

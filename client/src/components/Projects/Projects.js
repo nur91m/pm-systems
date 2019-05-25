@@ -1,71 +1,28 @@
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import "./Projects.css";
+import AddProject from "./AddProject/AddProject";
+import {createProject} from "../../actions/projectActions"
+import { connect } from "react-redux";
 
 class Projects extends Component {
     constructor() {
         super();
         this.state = {
-            orderNumber: "",
-            projectName: "",
-            disciplines: []            
-          };
+          orderNumber: "",
+          projectName: "",
+          disciplines: [],
+          isModalOpen: false
+        };
+    }
+    
+    addProject = (props) => {
+      this.props.createProject(props)
     }
     
 
-    onInputChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
   render() {
-    const Modal = () => (
-      <Popup
-        trigger={
-          <div className="project">
-            <div className="btn project__btn second">
-              <div className="project-number">6829-2018</div>
-              <div className="project-desc">Добавить проект</div>
-            </div>
-          </div>
-        }
-        modal
-        closeOnDocumentClick
-      >
-        <div>
-          <p>Номер заказа</p>
-          <input type="text" name="orderNumber" onChange={this.onInputChange.bind(this)} value={this.state.orderNumber} />
-          <p>Название проекта</p>
-          <input type="text" name="projectName" onChange={this.onInputChange.bind(this)} value={this.state.projectName} />
-          <p>Разделы</p>
-          <div>
-            <div className="discipline">
-              <div className="discipline-icon" />
-              <div className="discipline-name">MasterPlan</div>
-            </div>
-            <div className="discipline">
-              <div className="discipline-icon" />
-              <div className="discipline-name">АР</div>
-            </div>
-            <div className="discipline">
-              <div className="discipline-icon" />
-              <div className="discipline-name">КЖиКМ</div>
-            </div>
-            <div className="discipline">
-              <div className="discipline-icon" />
-              <div className="discipline-name">ТХ</div>
-            </div>
-            <div className="discipline">
-              <div className="discipline-icon" />
-              <div className="discipline-name">ОВиК</div>
-            </div>
-          </div>
-          <button>Применить</button>
-          <button>Отмена</button>
-        </div>
-      </Popup>
-    );
+    
 
     return (
       <div className="content">
@@ -116,7 +73,7 @@ class Projects extends Component {
                 </div>
               </a>
             </div>
-            <Modal />
+            <AddProject addProject={this.addProject.bind(this)} />
           </div>
         </div>
       </div>
@@ -124,4 +81,7 @@ class Projects extends Component {
   }
 }
 
-export default Projects;
+export default connect(
+  null,
+  { createProject }
+)(Projects);

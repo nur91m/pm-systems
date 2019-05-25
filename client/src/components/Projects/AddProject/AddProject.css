@@ -1,0 +1,18 @@
+textarea.form-control {
+height: 100px;
+}
+
+.discipline-name:hover, .discipline-icon:hover {
+    cursor: pointer;    
+}
+
+.discipline-icon .checked, .discipline-icon .unchecked {
+    display: none;
+}
+
+.discipline-icon .checked.visible, .discipline-icon .unchecked.visible {
+    display: block;
+    width: 16px;
+}
+
+

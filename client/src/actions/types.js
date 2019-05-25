@@ -17,3 +17,9 @@ export const VERIFING_STATUS = 'VERIFING_STATUS';
 
 // Projects
 export const  GET_PROJECTS ='GET_PROJECTS';
+export const  CREATE_PROJECTS ='CREATE_PROJECTS';
+export const  PROJECT_CREATING ='PROJECT_CREATING';
+
+
+
+

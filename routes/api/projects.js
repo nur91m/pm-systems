@@ -29,9 +29,9 @@ router.post(
         }
 
         const projectFields = {};
-        projectFields.name = req.body.name;
+        projectFields.name = req.body.projectName;
         projectFields.orderNumber = req.body.orderNumber;
-        projectFields.disciplines = req.body.disciplines.split(',');
+        projectFields.disciplines = req.body.disciplines
 
         // Save Project
         new Project(projectFields).save().then(project => res.json(project));

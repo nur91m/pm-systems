@@ -97,10 +97,11 @@ class WeeklyReportGrid extends React.Component {
       tasks: tasks.tasks
     };
 
-    if(this.props.weeklyReport.isExist &&
-      this.props.project.weeklyReportStartDay)
-
-    this.props.createWeeklyReport(report);
+    // Check if weekly grid tasks created already. If not check whether current user can create tasks
+    if(this.props.user.canEdit || this.props.weeklyReport.isExist) {        
+        this.props.createWeeklyReport(report);
+    }
+    
   };
 
   // Generate current date
