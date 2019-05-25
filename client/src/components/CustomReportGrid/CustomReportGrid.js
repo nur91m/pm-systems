@@ -328,7 +328,7 @@ class CustomReportGrid extends React.Component {
 const mapStateToProps = state => ({
   customReport: state.customReport,
   user: state.auth.user,
-  projects: state.project
+  projects: state.project.projects
 });
 
 export default connect(

@@ -5,15 +5,16 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  creating: false
+  creating: false,
+  projects: []
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_PROJECTS:
-      return action.payload;
+      return {...state, projects: action.payload};
     case CREATE_PROJECTS:
-      return { ...state, creating: false };
+      return { ...state, projects: [...state.projects, action.payload], creating: false };
     case PROJECT_CREATING:
       return { ...state, creating: true };
     default:

@@ -1,50 +1,14 @@
-.content
-{
-    position: relative;
-    width: 100%;
-    padding: 2vw 0;
-}
-.projects-row
-{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
+
 .project
 {
-    width: 23%;
-    flex: 0 0 23%;
-    margin-bottom: 2%;
+    height: 170px;
 }
-.project__btn{
+/* .project>.btn
+{
     width: 100%;
-    height:  12vw;
-    padding: 1vw;
-    color: #fff !important;
-    border-radius: 0;
-}
-.first
-{
-    background: #F44336;
-}
-.second
-{
-    background: #9C27B0;
-}
-.third
-{
-    background: #2196F3;
-}
-.fourth
-{
-    background: #00BCD4;
-}
-.fifth
-{
-    background: #FF9800;
-}
+    margin: 5px;
+} */
+
 .project-number
 {
     font-weight: 600;

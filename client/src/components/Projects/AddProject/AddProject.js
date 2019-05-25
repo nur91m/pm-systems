@@ -11,23 +11,23 @@ export default class AddProject extends Component {
     this.state = {
       orderNumber: "",
       projectName: "",
-      disciplines: disciplineModule(),  
+      disciplines: disciplineModule(),
       isOpen: false,
-      error: {orderNumber: false, projectName: false}
+      error: { orderNumber: false, projectName: false }
     };
   }
 
   onInputChange = e => {
-    this.setState({[e.target.name]: e.target.value})
-    if(this.state.error[e.target.name] && isEmpty(this.state[[e.target.name]])) {
-      this.setState({error: {...this.state.error, [e.target.name]: false}})
+    this.setState({ [e.target.name]: e.target.value })
+    if (this.state.error[e.target.name] && isEmpty(this.state[[e.target.name]])) {
+      this.setState({ error: { ...this.state.error, [e.target.name]: false } })
     }
   };
 
   onSubmit = () => {
-    
-    if(isEmpty(this.state.orderNumber) || isEmpty(this.state.projectName) ) {
-      this.setState({error: {orderNumber: isEmpty(this.state.orderNumber), projectName: isEmpty(this.state.projectName)}})      
+
+    if (isEmpty(this.state.orderNumber) || isEmpty(this.state.projectName)) {
+      this.setState({ error: { orderNumber: isEmpty(this.state.orderNumber), projectName: isEmpty(this.state.projectName) } })
       return
     }
 
@@ -47,7 +47,7 @@ export default class AddProject extends Component {
     this.modalClose();
   };
   modalOpen = () => {
-    this.setState({disciplines: disciplineModule(), plorderNumber: "", projectName: "", error: {orderNumber: false, projectName: false}, isOpen: true });
+    this.setState({ disciplines: disciplineModule(), plorderNumber: "", projectName: "", error: { orderNumber: false, projectName: false }, isOpen: true });
   };
 
   modalClose = () => {
@@ -57,17 +57,18 @@ export default class AddProject extends Component {
   onSelect = (disciplineIndex) => {
     var disciplines = this.state.disciplines;
     disciplines[disciplineIndex].isSelected = !disciplines[disciplineIndex].isSelected;
-    this.setState({disciplines: disciplines})
+    this.setState({ disciplines: disciplines })
   };
 
   render() {
     return (
       <Popup
         trigger={
-          <div className="project">
-            <div className="btn project__btn second">
-              <div className="project-number">6829-2018</div>
-              <div className="project-desc">Добавить проект</div>
+          <div className="project col-md-3 p-2">
+            <div className="btn btn-danger px-1 w-100 h-100">
+              <div className="project-number">Добавить проект</div>
+              <div className="project-desc">
+              </div>
             </div>
           </div>
         }
@@ -121,15 +122,15 @@ export default class AddProject extends Component {
                   {this.state.disciplines.map((discipline, index) => {
                     return (
                       <div className="discipline col-sm-6 d-flex justify-content-start">
-                         <div className="discipline-icon mx-2" onClick={this.onSelect.bind(this, index)}>
-                           <div className={!discipline.isSelected ? "checked" : "checked visible text-success"}>
-                              <i className="fas fa-check"></i>
-                           </div>
-                           <div className={discipline.isSelected ? "unchecked" : "unchecked visible text-danger"}>
-                           <i className="fas fa-times"></i>
-                           </div>
-                         </div>
-                        
+                        <div className="discipline-icon mx-2" onClick={this.onSelect.bind(this, index)}>
+                          <div className={!discipline.isSelected ? "checked" : "checked visible text-success"}>
+                            <i className="fas fa-check"></i>
+                          </div>
+                          <div className={discipline.isSelected ? "unchecked" : "unchecked visible text-danger"}>
+                            <i className="fas fa-times"></i>
+                          </div>
+                        </div>
+
                         <div className="discipline-name" onClick={this.onSelect.bind(this, index)}>
                           {discipline.name}
                         </div>
