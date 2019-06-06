@@ -1,0 +1,85 @@
+.sidebar {
+    height: 100%;
+    width: 230px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #1563BC;
+    overflow-x: hidden;
+    transition: 0.1s;    
+  }
+  
+  .sidebar a {    
+    width: 100%;
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    display: block;
+    white-space: nowrap;
+    transition: 0.1s;
+    cursor: pointer;
+  }
+  .sidebar hr {
+    width: 75%;
+    border-color: #FFFFFF22;
+    margin: 10px;    
+  }
+  
+  .sidebar a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: -13px;
+    right: -96px;    
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #1563BC;
+    color: white;
+    padding: 10px 15px;
+    float: left;
+    border: none;
+    margin: -16px;
+    position: fixed;
+  }
+  
+  .openbtn:hover {
+    background-color: rgb(17, 82, 156);
+  }
+  
+
+  .avatar hr {
+      width: 75%;
+  }
+  .avatar {
+      width: 100%;
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      font-size: 14px;
+      color: white;
+      white-space: nowrap;
+  }
+  .avatar img {
+      margin-right: 5px;
+      
+  }
+
+  #main {
+    transition: margin-left .1s;
+    padding: 16px;
+    margin-left: 230px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+  }

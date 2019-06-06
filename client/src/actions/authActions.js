@@ -1,4 +1,4 @@
-import {GET_ERRORS, SET_CURRENT_USER} from './types';
+import {GET_ERRORS, GET_USERS, SET_CURRENT_USER, CLEAR_USERS_FROM_STORE} from './types';
 
 import setAuthToken from '../utils/setAuthToken';
 import jwtDecode from 'jwt-decode'
@@ -37,6 +37,62 @@ export const loginUser = userData => dispatch => {
             type: GET_ERRORS,
             payload: err.response.data
         })
+    })
+}
+
+//Get All Users
+export const getUsers = () => dispatch =>  {
+    axios.get('/api/users/allUsers')
+    .then(res=> {
+        console.log(res)
+        dispatch({
+            type: GET_USERS,
+            payload: res.data
+
+        })
+    })
+    .catch(err=>{
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    })
+}
+
+//Edit user
+export const editUser = (id) => dispatch =>  {
+    axios.post('/api/users/edit', {id})
+    .then(res=> {
+        console.log('Successfully updated')
+        
+    })
+    .catch(err=>{
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    })
+}
+
+//Remove user
+export const removeUser = (id) => dispatch =>  {
+    axios.post('/api/users/remove', {id})
+    .then(res=> {
+        console.log(res)
+        
+    })
+    .catch(err=>{
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    })
+}
+
+//Clear users from store
+export const clearUsersFromStore = () => dispatch =>  {
+    dispatch({
+        type: CLEAR_USERS_FROM_STORE
     })
 }
 

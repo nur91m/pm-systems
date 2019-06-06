@@ -8,8 +8,9 @@ class Header extends Component {
     render() {
         const {user} = this.props.auth
         const isAuthenticated = this.props.auth.isAuthenticated;
+        const isVisiable = isAuthenticated && !this.props.location.pathname.includes('dashboard');
       return (
-          isAuthenticated ?
+        isVisiable ?
         <header className="header">  
                 <nav className="navbar navbar-expand-lg">
                     <a className="navbar-brand" href="#">

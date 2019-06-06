@@ -16,6 +16,7 @@ import CustomReportGrid from "./components/CustomReportGrid/CustomReportGrid";
 import WeeklyReportGrid from "./components/WeeklyReportGrid/WeeklyReportGrid";
 import Home from "./components/Home/Home";
 import ReportCheck from "./components/ReportCheck/ReportCheck";
+import Dashboard from "./components/Dashboard/Dashboard/Dashboard";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -58,6 +59,9 @@ class App extends Component {
               </Switch>
               <Switch>
               <PrivateRoute exact path="/check-report" component={ReportCheck}/>
+              </Switch>
+              <Switch>
+              <PrivateRoute path="/dashboard" component={Dashboard}/>
               </Switch>
             </div>
           </div>

@@ -2,6 +2,11 @@ export const GET_ERRORS = 'GET_ERRORS';
 
 // Authentication
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const GET_USERS = 'GET_USERS';
+export const CLEAR_USERS_FROM_STORE = 'CLEAR_USERS_FROM_STORE';
+
+
+
 
 // Reports
 export const CREATE_WEEKLY_REPORT = 'CREATE_WEEKLY_REPORT';

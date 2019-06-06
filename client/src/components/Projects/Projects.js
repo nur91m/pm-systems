@@ -13,8 +13,7 @@ class Projects extends Component {
     this.state = {
       projects: [],
       isModalOpen: false
-    };
-    this.lastColor = []
+    };    
   }
 
   componentDidMount() {

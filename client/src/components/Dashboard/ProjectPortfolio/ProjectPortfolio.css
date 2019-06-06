@@ -1,0 +1,26 @@
+.btn-groups p {
+    padding: 5px 20px;
+    font-size: 20px;
+    margin-bottom: 0;
+
+}
+
+.projects {
+    border: 1px solid black;
+    min-height: 100px;
+}
+
+.project p {
+    margin: 0;
+}
+.project {
+    cursor: pointer;
+}
+
+.project:hover {
+    background: #dadada;
+}
+
+.orderNumber{
+    font-weight: bold; 
+}
