@@ -43,8 +43,7 @@ export const loginUser = userData => dispatch => {
 //Get All Users
 export const getUsers = () => dispatch =>  {
     axios.get('/api/users/allUsers')
-    .then(res=> {
-        console.log(res)
+    .then(res=> {        
         dispatch({
             type: GET_USERS,
             payload: res.data
@@ -60,8 +59,8 @@ export const getUsers = () => dispatch =>  {
 }
 
 //Edit user
-export const editUser = (id) => dispatch =>  {
-    axios.post('/api/users/edit', {id})
+export const editUser = (userData) => dispatch =>  {
+    axios.post('/api/users/edit', userData)
     .then(res=> {
         console.log('Successfully updated')
         

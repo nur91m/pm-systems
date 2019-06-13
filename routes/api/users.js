@@ -54,7 +54,8 @@ router.post(
   (req, res) => {
     
 
-    const avatar = `${req.body.email.split("@")[0]}.jpg`;
+
+    
     const newData = {
       name: req.body.name,
       lastName: req.body.lastName,
@@ -63,12 +64,12 @@ router.post(
       position: req.body.position,
       discipline: req.body.discipline,
       role: req.body.role,
-      avatar
+      avatar: req.body.avatar
     };
 
     User.findByIdAndUpdate(
       req.body.id,
-      { ...newData },
+      newData,
       { new: true },
       (err, data) => {
         if (err) {

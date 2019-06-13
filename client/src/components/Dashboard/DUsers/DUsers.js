@@ -3,8 +3,11 @@ import { connect } from "react-redux";
 import {
   getUsers,
   clearUsersFromStore,
-  removeUser
+  removeUser,
+  editUser
 } from "../../../actions/authActions";
+import AddUser from "./AddUser/AddUser";
+import "./DUsers.css";
 
 export class DUsers extends Component {
   constructor() {
@@ -35,23 +38,41 @@ export class DUsers extends Component {
     this.props.clearUsersFromStore();
   }
 
-  editUser = id => {
-
+  editUser = userData => {
+    this.props.editUser(userData);
+    this.setState({ ...this.state, users: [] });
+    this.props.getUsers();
   };
   removeUser = id => {
     this.props.removeUser(id);
     const users = this.state.users.filter(user => {
-        if(user._id === id) {
-            return false;
-        } 
-        return true;
-    })
-    this.setState({...this.state, users});    
+      if (user._id === id) {
+        return false;
+      }
+      return true;
+    });
+    this.setState({ ...this.state, users });
+  };
+
+  roleFormat = role => {
+    switch (role) {
+      case "Employee":
+        return "Исполнитель";
+        break;
+      case "PmManager":
+        return "Менеджер УП";
+        break;
+      case "Chief":
+        return "Главный специалист";
+        break;
+      default:
+        break;
+    }
   };
 
   render() {
     return (
-      <div className="container" style={{minWidth: "1000px"}}>
+      <div className="container" style={{ minWidth: "1000px" }}>
         <div className="row justify-content-center my-3">
           <h3>Список пользователей</h3>
         </div>
@@ -62,7 +83,7 @@ export class DUsers extends Component {
                 <tr>
                   <th>Фамилия</th>
                   <th>Имя</th>
-                  <th>Должность</th>
+                  <th style={{ width: "100px" }}>Должность</th>
                   <th>Раздел</th>
                   <th>Роль</th>
                   <th>Почта</th>
@@ -78,15 +99,17 @@ export class DUsers extends Component {
                   <td>{user.name}</td>
                   <td>{user.position}</td>
                   <td>{user.discipline}</td>
-                  <td>{user.role}</td>
+                  <td>{this.roleFormat.call(this,user.role)}</td>
                   <td>{user.email}</td>
                   <td>{user.password}</td>
-                  <td>
-                    <button onClick={this.editUser.bind(this, user._id)}>
-                      Edit
-                    </button>
+                  <td className="edit-col">
+                    <AddUser
+                      userData={user}
+                      updateUser={this.editUser.bind(this)}
+                    />
+
                     <button onClick={this.removeUser.bind(this, user._id)}>
-                      Remove
+                      <i className="far fa-trash-alt text-danger" />
                     </button>
                   </td>
                 </tr>
@@ -105,5 +128,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUsers, clearUsersFromStore, removeUser }
+  { getUsers, clearUsersFromStore, removeUser, editUser }
 )(DUsers);

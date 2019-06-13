@@ -1,0 +1,33 @@
+.form-control {
+padding: 2px;
+font-size: 14px;
+}
+
+textarea.form-control {
+    height: 50px;
+}
+
+.row {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+
+
+.btn.btn-add {
+    border: 3px dashed #11539D;
+    color: #11539D
+}
+
+.btn.btn-add:hover {
+    cursor: pointer;
+    background: #11539D;
+    color: white;
+    border: none;
+    
+}
+
+.popup-content {
+    padding: 0!important;
+    border: none!important;
+}

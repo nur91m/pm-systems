@@ -1,26 +1,26 @@
-.btn-groups p {
+.project-portfolio-comp .btn-groups p {
     padding: 5px 20px;
     font-size: 20px;
     margin-bottom: 0;
 
 }
 
-.projects {
+.project-portfolio-comp .projects {
     border: 1px solid black;
     min-height: 100px;
 }
 
-.project p {
+.project-portfolio-comp .project p {
     margin: 0;
 }
-.project {
+.project-portfolio-comp .project {
     cursor: pointer;
 }
 
-.project:hover {
+.project-portfolio-comp .project:hover {
     background: #dadada;
 }
 
-.orderNumber{
+.project-portfolio-comp .orderNumber{
     font-weight: bold; 
 }

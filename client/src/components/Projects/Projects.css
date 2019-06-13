@@ -1,5 +1,5 @@
 
-.project
+.projects-comp .project
 {
     height: 170px;
 }
@@ -9,26 +9,23 @@
     margin: 5px;
 } */
 
-.project-number
+.projects-comp .project-number
 {
     font-weight: 600;
     font-size: 22px;
     margin-bottom: 1vw;
 }
-.project-desc
+.projects-comp .project-desc
 {
     font-size: 16px;
     line-height: 1.2;
 }
-
-
-
-.btn.border-2 {
+.projects-comp .btn.border-2 {
     border: 1px black solid;
     border-radius: 0;    
 }
 
-.btn.border-2:hover {
+.projects-comp .btn.border-2:hover {
     background: #11539D;
     color: white;
     border: none;

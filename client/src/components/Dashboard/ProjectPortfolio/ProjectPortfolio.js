@@ -27,7 +27,7 @@ export class ProjectPortfolio extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container project-portfolio-comp">
         <div className="row justify-content-center">
           <h4>Портфель проектов</h4>
         </div>
