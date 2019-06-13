@@ -26,8 +26,8 @@ export class CustomReportCheck extends Component {
 
   render() {
 
-    const validateButton = this.state.visible ? 
-                          <button onClick={this.validate.bind(this)}>Подтвердить</button> : ""
+    const validateButton = this.state.visible && 
+                          <button onClick={this.validate.bind(this)}>Подтвердить</button>
 
 
     const tableData = this.state.projects.map(project => {

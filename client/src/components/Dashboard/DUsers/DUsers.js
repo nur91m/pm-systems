@@ -79,7 +79,7 @@ export class DUsers extends Component {
         <div className="row justify-content-center">
           <table>
             <tbody>
-              {this.state.users.length > 0 ? (
+              {this.state.users.length > 0 && (
                 <tr>
                   <th>Фамилия</th>
                   <th>Имя</th>
@@ -90,8 +90,6 @@ export class DUsers extends Component {
                   <th>Пароль</th>
                   <th>Редактировать</th>
                 </tr>
-              ) : (
-                <tr />
               )}
               {this.state.users.map(user => (
                 <tr key={user._id}>

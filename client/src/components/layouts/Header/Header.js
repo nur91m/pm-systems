@@ -10,7 +10,7 @@ class Header extends Component {
         const isAuthenticated = this.props.auth.isAuthenticated;
         const isVisiable = isAuthenticated && !this.props.location.pathname.includes('dashboard');
       return (
-        isVisiable ?
+        isVisiable &&
         <header className="header">  
                 <nav className="navbar navbar-expand-lg">
                     <a className="navbar-brand" href="#">
@@ -28,8 +28,7 @@ class Header extends Component {
                             
                     </div>
                 </nav>
-            </header>
-            : <div></div>
+            </header>            
       );
     }
   }
