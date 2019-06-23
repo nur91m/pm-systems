@@ -1,13 +1,14 @@
 import isEmpty from '../validation/is-empty'
 import {    
-  GET_CUSTOM_REPORT, CUSTOM_REPORT_LOADING
+  GET_CUSTOM_REPORT, CUSTOM_REPORT_LOADING, GET_ALL_CUSTOM_REPORT
 } from "../actions/types";
 
 const initialState = {
   isExist: false,
   projects: [],
   id: "",
-  loading: false
+  loading: false,
+  allReports: []
 };
 
 export default function(state = initialState, action) {
@@ -33,6 +34,11 @@ export default function(state = initialState, action) {
         loading: false
       };
     }
+    case GET_ALL_CUSTOM_REPORT:
+      return {
+        ...state,
+        allReports: action.payload
+      }
     default:
       return state;
   }

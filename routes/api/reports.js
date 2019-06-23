@@ -201,6 +201,21 @@ router.post(
   }
 );
 
+//  @route  GET /api/reports/custom-report/all
+//  @desc   Get all custom reports
+//  @access Private
+router.get(
+  "/custom-report/all",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {    
+    CustomReport.find({})      
+      .then(reports => {        
+          res.status(200).json(reports);        
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
+
 //  @route  POST /api/reports/custom-report/not-verified
 //  @desc   Get custom report that needs to be verified
 //  @access Private

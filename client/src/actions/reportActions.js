@@ -2,6 +2,7 @@ import {
   CREATE_WEEKLY_REPORT,
   CREATE_CUSTOM_REPORT,
   GET_WEEKLY_REPORT,
+  GET_ALL_CUSTOM_REPORT,
   GET_CUSTOM_REPORT,
   GET_ERRORS,
   WEEKLY_REPORT_LOADING,
@@ -33,6 +34,25 @@ export const getLastCustomReport = () => dispatch => {
     .then(res => {      
       dispatch({
         type: GET_CUSTOM_REPORT,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+// Get all custom reports
+export const getAllCustomReports = () => dispatch => {    
+  axios
+    .get("/api/reports/custom-report/all")
+    .then(res => {      
+      dispatch({
+        type: GET_ALL_CUSTOM_REPORT,
         payload: res.data
       });
     })
