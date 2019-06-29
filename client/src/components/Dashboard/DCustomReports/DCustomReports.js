@@ -4,7 +4,8 @@ import { getAllCustomReports } from "../../../actions/reportActions";
 import "./DCustomReports.css";
 import moment from "moment";
 import _ from "underscore";
-
+import isEmpty from "../../../validation/is-empty";
+import { getUsers } from "../../../actions/authActions";
 export class DCustomReports extends Component {
   constructor() {
     super();
@@ -13,18 +14,30 @@ export class DCustomReports extends Component {
       groupBy: ["date"],
       groupList: ["discipline"],
       allReports: [],
-      grouped: {}
+      grouped: {},
+      users: {}
     };
   }
 
   componentDidMount() {
     this.props.getAllCustomReports();
+    this.props.getUsers();
   }
-  
-  
 
   componentWillReceiveProps(props) {
-    this.setState({ ...this.state, allReports: props.allReports});    
+    if (isEmpty(this.state.allReports)) {
+      this.setState({ ...this.state, allReports: props.allReports }, () =>
+        this.groupHandler()
+      );
+    }
+    if (isEmpty(this.state.users) && !isEmpty(props.users)) {
+      const users = Object.assign(
+        ...props.users.map(user => {
+          return { [user._id]: user.lastName + " " + user.name };
+        })
+      );
+      this.setState({ ...this.state, users: users }, () => this.groupHandler());
+    }
   }
 
   addGroup = () => {
@@ -39,8 +52,9 @@ export class DCustomReports extends Component {
         ...this.state,
         groupBy,
         groupList
-      });      
+      });
     }
+    this.groupHandler();
   };
 
   removeGroup = () => {
@@ -55,8 +69,9 @@ export class DCustomReports extends Component {
         ...this.state,
         groupBy,
         groupList
-      });     
+      });
     }
+    this.groupHandler();
   };
 
   onSelectChange = (index, e) => {
@@ -70,46 +85,49 @@ export class DCustomReports extends Component {
         ...this.state,
         groupBy,
         groupList
-      });      
+      });
     }
+    this.groupHandler();
   };
 
   groupHandler = () => {
-    const group1 = this.state.groupBy[0];
-    const groupByDate = data =>
-      _.groupBy(data, report =>
-        moment(report.date)
-          .locale("ru")
-          .format("MMMM YYYY")
-      );
+    if (!isEmpty(this.state.users) && !isEmpty(this.state.allReports)) {
+      const group1 = this.state.groupBy[0];
+      const groupByDate = data =>
+        _.groupBy(data, report =>
+          moment(report.date)
+            .locale("ru")
+            .format("MMMM YYYY")
+        );
 
-    const groupByDiscipline = data =>
-      _.groupBy(data, report => report.discipline);
+      const groupByDiscipline = data =>
+        _.groupBy(data, report => report.discipline);
 
-    let firstGroup = {};
-    let secondGroup = {};
+      let firstGroup = {};
+      let secondGroup = {};
 
-    if (group1 === "date") {
-      firstGroup = groupByDate(this.state.allReports);
-      if (this.state.groupBy.length === 2) {
-        for (let key in firstGroup) {
-          secondGroup[key] = groupByDiscipline(firstGroup[key]);
+      if (group1 === "date") {
+        firstGroup = groupByDate(this.state.allReports);
+        if (this.state.groupBy.length === 2) {
+          for (let key in firstGroup) {
+            secondGroup[key] = groupByDiscipline(firstGroup[key]);
+          }
+        } else {
+          secondGroup = firstGroup;
         }
       } else {
-        secondGroup = firstGroup;
-      }
-    } else {
-      firstGroup = groupByDiscipline(this.state.allReports);
-      if (this.state.groupBy.length === 2) {
-        for (let key in firstGroup) {
-          secondGroup[key] = groupByDate(firstGroup[key]);
+        firstGroup = groupByDiscipline(this.state.allReports);
+        if (this.state.groupBy.length === 2) {
+          for (let key in firstGroup) {
+            secondGroup[key] = groupByDate(firstGroup[key]);
+          }
+        } else {
+          secondGroup = firstGroup;
         }
-      } else {
-        secondGroup = firstGroup;
       }
+      this.setState({ ...this.state, grouped: secondGroup });
+      console.log(secondGroup);
     }
-    this.setState({ ...this.state, grouped: secondGroup });
-    console.log(secondGroup);
   };
 
   render() {
@@ -124,7 +142,7 @@ export class DCustomReports extends Component {
               name={"group" + index}
               value={group}
               onChange={this.onSelectChange.bind(this, index)}
-              disabled={this.state.groupBy.length - 1 === index ? false : true}              
+              disabled={this.state.groupBy.length - 1 === index ? false : true}
             >
               <option value="discipline">раздел</option>
               <option value="date">дата</option>
@@ -142,13 +160,35 @@ export class DCustomReports extends Component {
           )}
         </div>
         <div className="row group-content">
-          {    
-            Object.keys(this.state.grouped).map(key => {
-              return <div>{key}</div>
-            })        
-            
-
-          }
+          {Object.keys(this.state.grouped).map(key => {
+            return (
+              <div className="group1">
+                <div className="group1-key">{key}</div>
+                <div className="group1-values">
+                  {Array.isArray(this.state.grouped[key])
+                    ? this.state.grouped[key].map(user => (
+                        <div className="report-owner">
+                          {this.state.users[user.user]}
+                        </div>
+                      ))
+                    : Object.keys(this.state.grouped[key]).map(key2 => {
+                        return (
+                          <div className="group2">
+                            <div className="group2-key">{key2}</div>
+                            <div className="group2-values">
+                              {this.state.grouped[key][key2].map(user => (
+                                <div className="report-owner">
+                                  {this.state.users[user.user]}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -156,10 +196,11 @@ export class DCustomReports extends Component {
 }
 
 const mapStateToProps = state => ({
-  allReports: state.customReport.allReports
+  allReports: state.customReport.allReports,
+  users: state.auth.allUsers
 });
 
 export default connect(
   mapStateToProps,
-  { getAllCustomReports }
+  { getAllCustomReports, getUsers }
 )(DCustomReports);
